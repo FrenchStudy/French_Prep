@@ -1,0 +1,91 @@
+[
+  {
+    "id": "genre",
+    "title": "Le genre des noms (le / la)",
+    "explanation": "Chaque nom français est masculin ou féminin — cela ne se devine pas toujours du sens, il faut souvent l'apprendre avec le mot. Quelques tendances utiles : les noms en -age, -isme, -ment sont souvent masculins ; les noms en -tion, -sion, -té, -ette sont souvent féminins. Mais il y a beaucoup d'exceptions (une page, un système).",
+    "examples": [
+      "le gouvernement (m) / la solution (f)",
+      "un problème (m) / une décision (f)",
+      "l'environnement (m) / la sécurité (f)"
+    ],
+    "drills": [
+      { "type": "mcq", "q": "___ situation est compliquée.", "choices": ["Le", "La"], "answer": "La" },
+      { "type": "mcq", "q": "___ gouvernement a annoncé une réforme.", "choices": ["Le", "La"], "answer": "Le" },
+      { "type": "mcq", "q": "___ éducation est un droit fondamental.", "choices": ["Le", "La"], "answer": "L'" }
+    ]
+  },
+  {
+    "id": "passe-imparfait",
+    "title": "Passé composé vs imparfait",
+    "explanation": "Le passé composé raconte une action précise, terminée, souvent unique (« j'ai fini »). L'imparfait décrit un contexte, une habitude, ou une action en cours dans le passé (« je finissais »). On les combine souvent : l'imparfait pose le décor, le passé composé fait avancer l'histoire.",
+    "examples": [
+      "Il pleuvait (imparfait, contexte) quand je suis sorti (passé composé, action).",
+      "Avant, j'habitais (habitude) à Lyon. Puis j'ai déménagé (action ponctuelle) à Montréal."
+    ],
+    "drills": [
+      { "type": "mcq", "q": "Quand j'étais petit, je ___ (jouer) souvent dehors.", "choices": ["ai joué", "jouais"], "answer": "jouais" },
+      { "type": "mcq", "q": "Hier soir, elle ___ (arriver) en retard.", "choices": ["est arrivée", "arrivait"], "answer": "est arrivée" },
+      { "type": "mcq", "q": "Il faisait beau quand nous ___ (partir) en randonnée.", "choices": ["sommes partis", "partions"], "answer": "sommes partis" }
+    ]
+  },
+  {
+    "id": "subjonctif",
+    "title": "Le subjonctif présent",
+    "explanation": "Le subjonctif s'utilise après des expressions de nécessité, de doute, de souhait ou d'émotion (il faut que, je veux que, je doute que, je suis content que). Pour la plupart des verbes réguliers, on part de la 3e personne du pluriel au présent (ils parlent → que je parle).",
+    "examples": [
+      "Il faut que tu fasses attention.",
+      "Je doute qu'il ait raison.",
+      "Nous sommes contents que vous soyez venus."
+    ],
+    "drills": [
+      { "type": "mcq", "q": "Il faut que je ___ (partir) tôt demain.", "choices": ["pars", "parte"], "answer": "parte" },
+      { "type": "mcq", "q": "Je ne pense pas qu'il ___ (avoir) tort.", "choices": ["a", "ait"], "answer": "ait" },
+      { "type": "mcq", "q": "Elle veut que nous ___ (être) à l'heure.", "choices": ["sommes", "soyons"], "answer": "soyons" }
+    ]
+  },
+  {
+    "id": "pronoms-en-y",
+    "title": "Les pronoms en et y",
+    "explanation": "« En » remplace une quantité ou un complément introduit par « de » (j'en veux = je veux du/de la...). « Y » remplace un lieu ou un complément introduit par « à » (j'y vais = je vais à cet endroit).",
+    "examples": [
+      "Tu as des questions ? Oui, j'en ai une.",
+      "Tu penses à l'examen ? Oui, j'y pense souvent.",
+      "Elle va au Canada. Elle y va en janvier."
+    ],
+    "drills": [
+      { "type": "mcq", "q": "Des amis francophones ? Oui, j'___ ai plusieurs.", "choices": ["en", "y"], "answer": "en" },
+      { "type": "mcq", "q": "Tu vas à la réunion ? Oui, j'___ vais.", "choices": ["en", "y"], "answer": "y" },
+      { "type": "mcq", "q": "Il a besoin d'aide. Il ___ a vraiment besoin.", "choices": ["en", "y"], "answer": "en" }
+    ]
+  },
+  {
+    "id": "accord-participe",
+    "title": "L'accord du participe passé",
+    "explanation": "Avec « avoir », le participe passé s'accorde avec le complément d'objet direct SEULEMENT s'il est placé avant le verbe. Avec « être », le participe s'accorde presque toujours avec le sujet.",
+    "examples": [
+      "Elle est arrivée tôt. (accord avec le sujet, verbe être)",
+      "J'ai acheté des pommes. (pas d'accord, COD après le verbe)",
+      "Les pommes que j'ai achetées sont mûres. (accord, COD avant le verbe)"
+    ],
+    "drills": [
+      { "type": "mcq", "q": "Elle est ___ (partir) hier soir.", "choices": ["parti", "partie"], "answer": "partie" },
+      { "type": "mcq", "q": "Les lettres qu'il a ___ (écrire) sont arrivées.", "choices": ["écrit", "écrites"], "answer": "écrites" },
+      { "type": "mcq", "q": "Nous avons ___ (voir) un bon film.", "choices": ["vu", "vue"], "answer": "vu" }
+    ]
+  },
+  {
+    "id": "conditionnel",
+    "title": "Le conditionnel présent",
+    "explanation": "Le conditionnel exprime une hypothèse, une politesse, ou une conséquence imaginée. Formation : infinitif + terminaisons de l'imparfait (-ais, -ais, -ait, -ions, -iez, -aient). Souvent utilisé avec « si + imparfait ».",
+    "examples": [
+      "Si j'avais plus de temps, je voyagerais davantage.",
+      "Pourriez-vous m'aider, s'il vous plaît ?",
+      "Elle aimerait vivre à l'étranger."
+    ],
+    "drills": [
+      { "type": "mcq", "q": "Si j'avais de l'argent, je ___ (voyager) plus.", "choices": ["voyage", "voyagerais"], "answer": "voyagerais" },
+      { "type": "mcq", "q": "___-vous m'indiquer le chemin ? (pourrait)", "choices": ["Pourriez", "Pouvez"], "answer": "Pourriez" },
+      { "type": "mcq", "q": "Ils ___ (aimer) déménager si c'était possible.", "choices": ["aimeraient", "aiment"], "answer": "aimeraient" }
+    ]
+  }
+]
