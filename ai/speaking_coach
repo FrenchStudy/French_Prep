@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Plume — ton buddy IA</title>
+<link rel="stylesheet" href="../shared/styles.css">
+<style>
+.tabs{ display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+.tab{ font-family:'Baloo 2', sans-serif; font-weight:700; font-size:14px; padding:10px 16px; cursor:pointer; background:var(--card); border:2.5px solid var(--ink); border-radius:999px; color:var(--ink-soft); }
+.tab.active{ background:var(--blue); color:#fff; border-color:var(--blue); box-shadow: var(--shadow); }
+.chat-log{ display:flex; flex-direction:column; gap:14px; margin-bottom:16px; min-height:120px; }
+.msg{ max-width:78%; }
+.msg.buddy{ align-self:flex-start; }
+.msg.user{ align-self:flex-end; }
+.bubble{ font-family:'Nunito',sans-serif; font-weight:700; font-size:15px; line-height:1.45; padding:12px 16px; border-radius:18px; border:2.5px solid var(--ink); }
+.msg.buddy .bubble{ background:var(--blue-soft); border-bottom-left-radius:4px; }
+.msg.user .bubble{ background:var(--coral-soft); border-bottom-right-radius:4px; }
+.corrections{ margin-top:6px; font-size:12.5px; font-weight:700; background:var(--yellow-soft); border:2px dashed var(--coral); border-radius:12px; padding:8px 12px; color:var(--ink); }
+.corrections .orig{ text-decoration:line-through; color:#a3a3a3; font-weight:600; }
+.corrections .fix{ color:var(--coral); }
+.corrections .why{ color:var(--ink-soft); display:block; font-weight:600; margin-top:2px; }
+.prompt-card{ border:2.5px solid var(--ink); border-radius:18px; padding:16px 18px; margin-bottom:16px; background:var(--purple-soft); }
+.prompt-card .k{ font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; color:var(--purple); }
+.prompt-card .txt{ font-family:'Baloo 2',sans-serif; font-size:17px; font-weight:600; margin-top:6px; line-height:1.5; }
+.word-count{ font-size:12px; font-weight:700; color:var(--ink-soft); margin-top:6px; }
+.feedback{ margin-top:22px; }
+.stamp{ display:inline-block; font-family:'Baloo 2', sans-serif; font-weight:800; font-size:20px; padding:10px 22px; border-radius:999px; color:#fff; background:var(--purple); border:3px solid var(--ink); box-shadow: var(--shadow); }
+.stamp.green{ background:var(--green); }
+.stamp.red{ background:var(--coral); }
+.rubric{ margin-top:18px; display:grid; grid-template-columns:1fr; gap:9px; }
+.rubric-row{ display:flex; align-items:center; gap:10px; font-size:13px; font-weight:700; }
+.rubric-row .label{ width:150px; color:var(--ink-soft); }
+.bar{ flex:1; height:10px; background:var(--yellow-soft); border-radius:999px; overflow:hidden; border:1.5px solid var(--ink); }
+.bar > i{ display:block; height:100%; background:var(--blue); }
+.annot-block{ margin-top:18px; font-family:'Nunito',sans-serif; font-size:14.5px; font-weight:600; line-height:1.7; background:var(--card); border:2.5px solid var(--ink); border-radius:16px; padding:16px 18px; }
+.annot-block del{ color:var(--coral); text-decoration:line-through; }
+.annot-block ins{ color:var(--coral); text-decoration:none; font-weight:800; }
+.notes-title{ font-family:'Baloo 2',sans-serif; font-size:14px; font-weight:800; margin:18px 0 8px; color:var(--green);}
+.note-line{ font-size:13px; font-weight:700; margin-bottom:6px; padding-left:16px; position:relative; }
+.note-line::before{ content:"★"; position:absolute; left:0; color:var(--yellow); }
+.err-item{ border-bottom:2px dashed #e5e0d3; padding:10px 0; font-size:13.5px; font-weight:600; }
+.err-item .o{ text-decoration:line-through; color:#a3a3a3; }
+.err-item .c{ color:var(--coral); font-weight:800; }
+.err-item .w{ color:var(--ink-soft); font-size:12px; display:block; margin-top:3px; font-weight:600; }
+.target-words{ display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; }
+.tw{ font-size:11.5px; font-weight:700; padding:4px 10px; border-radius:999px; border:2px solid var(--purple); color:var(--purple); background:#fff; }
+.tw.used{ background:var(--green); color:#fff; border-color:var(--green); }
+.rec-indicator{ display:flex; align-items:center; gap:8px; font-size:13px; font-weight:800; color:var(--coral); }
+.dot{ width:10px; height:10px; border-radius:50%; background:var(--coral); animation:pulse 1s infinite; }
+@keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+.hist-item{ border:2px solid var(--ink); border-radius:14px; padding:10px 14px; margin-bottom:8px; background:var(--card); font-size:13px; font-weight:700; display:flex; justify-content:space-between; align-items:center; gap:10px; }
+.hist-item .d{ color:var(--ink-soft); font-weight:600; font-size:11.5px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top" id="plumeHeader"></header>
+  <nav class="top-nav" id="plumeNav"></nav>
+  <main>
+    <div class="head-right" style="margin-bottom:12px;">
+      <select class="pill-select" id="examSelect"></select>
+      <select class="pill-select" id="levelSelect"></select>
+    </div>
+    <div class="tabs" id="modeTabs"></div>
+    <div id="loadArea"></div>
+    <div id="content"></div>
+  </main>
+  <footer class="site-footer">Fait avec Plume · Tes données restent dans ce navigateur</footer>
+</div>
+
+<script src="../shared/config.js"></script>
+<script>window.PLUME_API_ENDPOINT = PLUME_API_ENDPOINT;</script>
+<script src="../shared/app.js"></script>
+<script>
+renderPlumeHeader('ai', '../');
+
+/* ============== STATE ============== */
+const STORAGE_KEYS = {
+  profile:'plume:profile', speaking:'plume:speaking-history', writingSubs:'plume:writing-submissions',
+  errorLog:'plume:error-log', topicSpeakHistory:'plume:topic-speaking-history'
+};
+let state = {
+  mode:'speaking', exam:'TCF', level:'B1', speakingTopic:'entretien',
+  speakingHistory: PlumeStorage.get(STORAGE_KEYS.speaking, []),
+  writingSubs: PlumeStorage.get(STORAGE_KEYS.writingSubs, []),
+  errorLog: PlumeStorage.get(STORAGE_KEYS.errorLog, []),
+  topicSpeakHistory: PlumeStorage.get(STORAGE_KEYS.topicSpeakHistory, {}),
+  currentPrompt:null, writingCategory:null, busy:false,
+  sujetTopic:null, currentQuestion:null, currentTargetWords:[], transcript:'', recognizing:false
+};
+{
+  const prof = PlumeStorage.get(STORAGE_KEYS.profile, null);
+  if(prof){ state.exam = prof.exam || state.exam; state.level = prof.level || state.level; }
+}
+let recognitionObj = null;
+let TOPICS = null, TOPIC_NAMES = [], SPEAKING_TOPICS = null, WRITING_PROMPTS = null;
+
+function saveProfile(){ PlumeStorage.set(STORAGE_KEYS.profile, {exam:state.exam, level:state.level}); }
+function saveSpeaking(){ PlumeStorage.set(STORAGE_KEYS.speaking, state.speakingHistory); }
+function saveWriting(){ PlumeStorage.set(STORAGE_KEYS.writingSubs, state.writingSubs); }
+function saveErrors(){ PlumeStorage.set(STORAGE_KEYS.errorLog, state.errorLog); }
+function saveTopicSpeakHistory(){ PlumeStorage.set(STORAGE_KEYS.topicSpeakHistory, state.topicSpeakHistory); }
+
+const EXAMS = ['TCF','TEF'];
+const LEVELS = ['A2','B1','B2','C1'];
+
+/* ============== SHELL ============== */
+function renderShell(){
+  const examSel = document.getElementById('examSelect');
+  examSel.innerHTML = EXAMS.map(e=>`<option ${e===state.exam?'selected':''}>${e}</option>`).join('');
+  examSel.onchange = (e)=>{ state.exam=e.target.value; saveProfile(); if(state.mode==='writing'){ state.currentPrompt=null; renderMain(); } };
+  const lvlSel = document.getElementById('levelSelect');
+  lvlSel.innerHTML = LEVELS.map(l=>`<option ${l===state.level?'selected':''}>${l}</option>`).join('');
+  lvlSel.onchange = (e)=>{ state.level=e.target.value; saveProfile(); };
+  const tabs = document.getElementById('modeTabs');
+  const tabDefs = [ ['speaking','🗣️ Parler'], ['sujets','🎯 Sujets'], ['writing','✍️ Écrire'], ['carnet','📒 Mon carnet'] ];
+  tabs.innerHTML = tabDefs.map(([id,label])=>`<div class="tab ${state.mode===id?'active':''}" data-tab="${id}">${label}</div>`).join('');
+  tabs.querySelectorAll('.tab').forEach(el=>{ el.onclick = ()=>{ state.mode = el.dataset.tab; renderMain(); }; });
+}
+function renderMain(){
+  renderShell();
+  const main = document.getElementById('content');
+  if(state.mode==='speaking') return renderSpeaking(main);
+  if(state.mode==='sujets') return renderSujets(main);
+  if(state.mode==='writing') return renderWriting(main);
+  if(state.mode==='carnet') return renderCarnet(main);
+}
+
+/* ============== SPEAKING (free conversation) ============== */
+function renderSpeaking(main){
+  main.innerHTML = `
+    <h2 class="section-title">Parler avec Plume</h2>
+    <p class="lede">Choisis un type d'épreuve orale et discute librement. Plume corrige tes erreurs au fil de la conversation.</p>
+    <div class="chip-row" id="topicChips"></div>
+    <div class="chat-log" id="chatLog"></div>
+    <div id="loadingRow"></div>
+    <div class="composer">
+      <textarea id="speakInput" rows="2" placeholder="Écris ta réponse en français..."></textarea>
+      <button class="btn" id="sendBtn">Envoyer</button>
+    </div>
+  `;
+  const chips = document.getElementById('topicChips');
+  chips.innerHTML = Object.entries(SPEAKING_TOPICS).map(([k,v])=>`<div class="chip ${state.speakingTopic===k?'active':''}" data-topic="${k}">${v.label}</div>`).join('');
+  chips.querySelectorAll('.chip').forEach(c=>{ c.onclick = ()=>{ state.speakingTopic = c.dataset.topic; renderSpeaking(main); }; });
+  renderChatLog();
+  document.getElementById('sendBtn').onclick = sendSpeakingMessage;
+  document.getElementById('speakInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter' && !e.shiftKey){ e.preventDefault(); sendSpeakingMessage(); } });
+  if(state.speakingHistory.length===0){ startSpeakingConversation(); }
+}
+function renderChatLog(){
+  const log = document.getElementById('chatLog');
+  if(!log) return;
+  log.innerHTML = state.speakingHistory.map(m=>{
+    if(m.role==='buddy'){ return `<div class="msg buddy"><div class="bubble">${escapeHtml(m.text)}</div></div>`; }
+    let corr = '';
+    if(m.corrections && m.corrections.length){
+      corr = `<div class="corrections">` + m.corrections.map(c=>`<div><span class="orig">${escapeHtml(c.original)}</span> → <span class="fix">${escapeHtml(c.corrected)}</span><span class="why">${escapeHtml(c.explanation||'')}</span></div>`).join('') + `</div>`;
+    }
+    return `<div class="msg user"><div class="bubble">${escapeHtml(m.text)}</div>${corr}</div>`;
+  }).join('');
+  log.scrollTop = log.scrollHeight;
+}
+function speakingSystemPrompt(){
+  const topic = SPEAKING_TOPICS[state.speakingTopic];
+  return `Tu es Plume, un tuteur de français chaleureux qui prépare un(e) étudiant(e) à l'épreuve orale du ${state.exam} (niveau visé: ${state.level} du CECR).
+Type d'exercice actuel: "${topic.label}" — ${topic.desc}
+Réponds toujours UNIQUEMENT en JSON valide, sans texte avant/après, sans markdown:
+{"reply": "ta réponse conversationnelle en français, naturelle, niveau ${state.level}, qui relance la discussion", "corrections": [{"original":"erreur exacte de l'étudiant","corrected":"version corrigée","explanation":"explication très courte en français simple"}]}
+"corrections" liste UNIQUEMENT les erreurs réelles du dernier message de l'étudiant. Liste vide si aucune erreur ou pas encore de message.`;
+}
+async function startSpeakingConversation(){
+  setBusy(true, "Plume réfléchit...");
+  try{
+    const text = await callClaude(speakingSystemPrompt(), [{role:'user', content:"Commence la conversation avec une première question adaptée à ce type d'épreuve."}]);
+    const parsed = parseJsonLoose(text);
+    const reply = parsed && parsed.reply ? parsed.reply : "Bonjour ! Prêt(e) à commencer ?";
+    state.speakingHistory.push({role:'buddy', text:reply});
+    saveSpeaking(); renderChatLog(); setBusy(false);
+  }catch(err){ setBusy(false); showError('loadingRow', err.message || "Impossible de démarrer la conversation."); }
+}
+async function sendSpeakingMessage(){
+  const input = document.getElementById('speakInput');
+  const text = input.value.trim();
+  if(!text || state.busy) return;
+  state.speakingHistory.push({role:'user', text});
+  input.value=''; renderChatLog();
+  setBusy(true, "Plume corrige et répond...");
+  try{
+    const convo = state.speakingHistory.slice(-10).map(m=>({ role: m.role==='buddy' ? 'assistant' : 'user', content: m.text }));
+    const raw = await callClaude(speakingSystemPrompt(), convo);
+    const parsed = parseJsonLoose(raw);
+    if(!parsed) throw new Error("Réponse de Plume illisible — réessaie.");
+    const lastUser = state.speakingHistory[state.speakingHistory.length-1];
+    lastUser.corrections = parsed.corrections || [];
+    if(lastUser.corrections.length){
+      lastUser.corrections.forEach(c=>{ state.errorLog.unshift({...c, date:new Date().toISOString(), source:'Parler'}); });
+      saveErrors();
+    }
+    state.speakingHistory.push({role:'buddy', text: parsed.reply || "..."});
+    saveSpeaking(); renderChatLog(); setBusy(false);
+  }catch(err){ setBusy(false); showError('loadingRow', err.message || "Un souci est survenu — réessaie."); }
+}
+function setBusy(b, msg){
+  state.busy = b;
+  const row = document.getElementById('loadingRow');
+  if(row) row.innerHTML = b ? `<div class="loading-line">💬 ${escapeHtml(msg||'...')}</div>` : '';
+  const sendBtn = document.getElementById('sendBtn'); if(sendBtn) sendBtn.disabled = b;
+}
+
+/* ============== SUJETS (topic-targeted speaking with audio) ============== */
+function renderSujets(main){
+  if(!state.sujetTopic) state.sujetTopic = TOPIC_NAMES[0];
+  main.innerHTML = `
+    <h2 class="section-title">Sujets ciblés</h2>
+    <p class="lede">Plume te pose une question sur un thème précis, en visant certains mots du vocabulaire. Réponds à l'oral (ou à l'écrit si le micro n'est pas disponible).</p>
+    <div class="chip-row" id="sujetChips"></div>
+    <div id="sujetLoadingTop"></div>
+    <div id="questionArea"></div>
+    <div id="recordArea"></div>
+    <div id="evalLoadingRow"></div>
+    <div id="evalArea"></div>
+    <h2 class="section-title" style="font-size:17px; margin-top:26px;">Historique — ${escapeHtml(state.sujetTopic)}</h2>
+    <div id="sujetHistList"></div>
+  `;
+  const chips = document.getElementById('sujetChips');
+  chips.innerHTML = TOPIC_NAMES.map(t=>`<div class="chip ${state.sujetTopic===t?'active':''}" data-t="${escapeHtml(t)}">${t}</div>`).join('');
+  chips.querySelectorAll('.chip').forEach(c=>{
+    c.onclick = ()=>{ state.sujetTopic=c.dataset.t; state.currentQuestion=null; state.transcript=''; renderSujets(main); };
+  });
+  renderSujetHistory();
+  if(!state.currentQuestion){ newSujetQuestion(); } else { renderQuestionArea(); renderRecordArea(); }
+}
+function renderSujetHistory(){
+  const list = document.getElementById('sujetHistList');
+  const hist = state.topicSpeakHistory[state.sujetTopic] || [];
+  if(hist.length===0){ list.innerHTML = `<p class="empty">Aucune tentative enregistrée pour ce thème.</p>`; return; }
+  list.innerHTML = hist.slice(0,10).map(h=>`
+    <div class="hist-item">
+      <div>${escapeHtml(h.question)}<div class="d">${new Date(h.date).toLocaleDateString('fr-FR')} · vocab ${h.vocabCoverage}/${h.targetCount}</div></div>
+      <div class="stamp ${h.contentScore>=7?'green':''}" style="font-size:13px; padding:6px 12px;">${h.contentScore}/10</div>
+    </div>`).join('');
+}
+async function newSujetQuestion(){
+  state.currentQuestion=null; state.transcript='';
+  document.getElementById('questionArea').innerHTML='';
+  document.getElementById('recordArea').innerHTML='';
+  document.getElementById('evalArea').innerHTML='';
+  showLoadingIn('sujetLoadingTop', "Plume prépare une question...");
+  const words = TOPICS[state.sujetTopic];
+  const picked = shuffle([...words]).slice(0, 8);
+  const sys = `Tu es Plume, examinateur oral pour le ${state.exam} (niveau ${state.level} du CECR). Sujet: "${state.sujetTopic}".
+Génère UNE question orale naturelle, du style épreuve d'expression orale, qui invite l'étudiant à utiliser plusieurs des mots suivants: ${picked.map(p=>p.w).join(', ')}.
+Réponds UNIQUEMENT en JSON: {"question":"la question en français, une seule phrase claire"}`;
+  try{
+    const raw = await callClaude(sys, [{role:'user', content:'Génère la question.'}], 300);
+    const parsed = parseJsonLoose(raw);
+    state.currentQuestion = (parsed && parsed.question) ? parsed.question : `Parle-moi de ${state.sujetTopic.toLowerCase()}.`;
+    state.currentTargetWords = picked.map(p=>({w:p.w, used:false}));
+    clearLoading('sujetLoadingTop');
+    renderQuestionArea(); renderRecordArea();
+  }catch(err){
+    clearLoading('sujetLoadingTop');
+    state.currentQuestion = `Parle-moi de ${state.sujetTopic.toLowerCase()}.`;
+    state.currentTargetWords = picked.map(p=>({w:p.w, used:false}));
+    showError('sujetLoadingTop', err.message + " — question de secours utilisée.");
+    renderQuestionArea(); renderRecordArea();
+  }
+}
+function renderQuestionArea(){
+  document.getElementById('questionArea').innerHTML = `
+    <div class="prompt-card">
+      <div class="k">${escapeHtml(state.sujetTopic)} · question</div>
+      <div class="txt">${escapeHtml(state.currentQuestion)}</div>
+      <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn secondary sm icon-btn" id="playQBtn">🔊 Écouter la question</button>
+        <button class="btn purple sm icon-btn" id="newQBtn">🔀 Nouvelle question</button>
+      </div>
+      <div class="target-words" id="targetWordsRow"></div>
+    </div>
+  `;
+  renderTargetWords();
+  document.getElementById('playQBtn').onclick = ()=>{ speak(state.currentQuestion); };
+  document.getElementById('newQBtn').onclick = newSujetQuestion;
+}
+function renderTargetWords(){
+  const row = document.getElementById('targetWordsRow');
+  if(!row) return;
+  row.innerHTML = state.currentTargetWords.map(t=>`<span class="tw ${t.used?'used':''}">${escapeHtml(t.w)}</span>`).join('');
+}
+function renderRecordArea(){
+  const supportsRec = !!getRecognitionCtor();
+  const area = document.getElementById('recordArea');
+  area.innerHTML = `
+    <div class="prompt-card" style="background:var(--card);">
+      <div class="k">Ta réponse</div>
+      ${supportsRec ? `
+        <div style="margin-top:10px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          <button class="btn coral icon-btn" id="recBtn">🎙️ Démarrer l'enregistrement</button>
+          <div id="recIndicator"></div>
+        </div>
+      ` : `<div class="warn-line">🎤 La reconnaissance vocale n'est pas disponible dans ce navigateur — tape ta réponse ci-dessous.</div>`}
+      <textarea id="transcriptInput" rows="5" placeholder="Ta réponse apparaîtra ici (ou tape-la directement)..." style="margin-top:10px;">${escapeHtml(state.transcript)}</textarea>
+      <div class="composer" style="margin-top:10px;">
+        <button class="btn" id="evalBtn">✅ Évaluer ma réponse</button>
+      </div>
+    </div>
+  `;
+  const transcriptInput = document.getElementById('transcriptInput');
+  transcriptInput.addEventListener('input', ()=>{ state.transcript = transcriptInput.value; });
+  if(supportsRec){ document.getElementById('recBtn').onclick = toggleRecognition; }
+  document.getElementById('evalBtn').onclick = evaluateSujetAnswer;
+}
+function toggleRecognition(){
+  const Ctor = getRecognitionCtor();
+  if(!Ctor) return;
+  const btn = document.getElementById('recBtn');
+  const indicator = document.getElementById('recIndicator');
+  if(state.recognizing){
+    if(recognitionObj){ try{ recognitionObj.stop(); }catch(e){} }
+    state.recognizing = false;
+    btn.textContent = '🎙️ Démarrer l\'enregistrement';
+    indicator.innerHTML = '';
+    return;
+  }
+  try{
+    recognitionObj = new Ctor();
+    recognitionObj.lang = 'fr-FR';
+    recognitionObj.continuous = true;
+    recognitionObj.interimResults = true;
+    let finalTranscript = state.transcript ? state.transcript + ' ' : '';
+    recognitionObj.onresult = (event)=>{
+      let interim = '';
+      for(let i=event.resultIndex; i<event.results.length; i++){
+        const t = event.results[i][0].transcript;
+        if(event.results[i].isFinal){ finalTranscript += t + ' '; } else { interim += t; }
+      }
+      state.transcript = (finalTranscript + interim).trim();
+      const ti = document.getElementById('transcriptInput');
+      if(ti) ti.value = state.transcript;
+    };
+    recognitionObj.onerror = (event)=>{
+      state.recognizing = false;
+      if(btn) btn.textContent = '🎙️ Démarrer l\'enregistrement';
+      showWarn('recIndicator', "Micro indisponible (" + event.error + ") — tape ta réponse.");
+    };
+    recognitionObj.onend = ()=>{
+      state.recognizing = false;
+      if(btn) btn.textContent = '🎙️ Démarrer l\'enregistrement';
+      if(indicator) indicator.innerHTML = '';
+    };
+    recognitionObj.start();
+    state.recognizing = true;
+    btn.textContent = '⏹️ Arrêter';
+    indicator.innerHTML = `<div class="rec-indicator"><span class="dot"></span> Enregistrement en cours...</div>`;
+  }catch(e){
+    showWarn('recIndicator', "Impossible d'accéder au micro — tape ta réponse.");
+  }
+}
+function sujetEvalSystemPrompt(){
+  return `Tu es Plume, examinateur oral pour le ${state.exam} (niveau visé: ${state.level} du CECR).
+On te donne une question, une liste de mots-cibles, et la réponse (transcrite) de l'étudiant.
+Évalue et réponds UNIQUEMENT en JSON valide, sans markdown:
+{"content_score":0-10,"grammar_score":0-10,"words_used":["mots de la liste cible réellement utilisés, tels quels"],"feedback":["2 à 4 conseils courts en français"],"model_answer":"une réponse modèle naturelle en français, niveau ${state.level}, utilisant plusieurs mots-cibles"}`;
+}
+async function evaluateSujetAnswer(){
+  const text = (state.transcript||'').trim();
+  if(!text || state.busy) return;
+  if(state.recognizing && recognitionObj){ try{ recognitionObj.stop(); }catch(e){} }
+  state.busy = true;
+  document.getElementById('evalBtn').disabled = true;
+  showLoadingIn('evalLoadingRow', "Plume évalue ta réponse...");
+  document.getElementById('evalArea').innerHTML = '';
+  try{
+    const userMsg = `Question: ${state.currentQuestion}\nMots-cibles: ${state.currentTargetWords.map(t=>t.w).join(', ')}\nRéponse de l'étudiant: ${text}`;
+    const raw = await callClaude(sujetEvalSystemPrompt(), [{role:'user', content:userMsg}], 900);
+    const parsed = parseJsonLoose(raw);
+    if(!parsed) throw new Error("Plume n'a pas pu analyser la réponse — réessaie.");
+    clearLoading('evalLoadingRow');
+    state.busy = false;
+    document.getElementById('evalBtn').disabled = false;
+
+    const usedSet = new Set((parsed.words_used||[]).map(w=>w.toLowerCase()));
+    state.currentTargetWords.forEach(t=>{ t.used = usedSet.has(t.w.toLowerCase()) || [...usedSet].some(u=>t.w.toLowerCase().includes(u) || u.includes(t.w.toLowerCase())); });
+    renderTargetWords();
+    const coverage = state.currentTargetWords.filter(t=>t.used).length;
+
+    document.getElementById('evalArea').innerHTML = `
+      <div class="feedback">
+        <div class="rubric">
+          <div class="rubric-row"><div class="label">Contenu</div><div class="bar"><i style="width:${(parsed.content_score||0)*10}%"></i></div><div>${parsed.content_score||0}/10</div></div>
+          <div class="rubric-row"><div class="label">Grammaire</div><div class="bar"><i style="width:${(parsed.grammar_score||0)*10}%"></i></div><div>${parsed.grammar_score||0}/10</div></div>
+          <div class="rubric-row"><div class="label">Vocabulaire ciblé</div><div class="bar"><i style="width:${(coverage/state.currentTargetWords.length)*100}%"></i></div><div>${coverage}/${state.currentTargetWords.length}</div></div>
+        </div>
+        <div class="notes-title">Conseils</div>
+        ${(parsed.feedback||[]).map(n=>`<div class="note-line">${escapeHtml(n)}</div>`).join('')}
+        <div class="annot-block" style="margin-top:18px;">
+          <strong>Réponse modèle :</strong><br>${escapeHtml(parsed.model_answer||'')}
+          <div style="margin-top:10px;"><button class="btn secondary sm icon-btn" id="playModelBtn">🔊 Écouter la réponse modèle</button></div>
+        </div>
+      </div>
+    `;
+    document.getElementById('playModelBtn').onclick = ()=>{ speak(parsed.model_answer||''); };
+
+    if(!state.topicSpeakHistory[state.sujetTopic]) state.topicSpeakHistory[state.sujetTopic] = [];
+    state.topicSpeakHistory[state.sujetTopic].unshift({
+      date:new Date().toISOString(), question:state.currentQuestion, transcript:text,
+      contentScore:parsed.content_score||0, grammarScore:parsed.grammar_score||0,
+      vocabCoverage:coverage, targetCount:state.currentTargetWords.length
+    });
+    saveTopicSpeakHistory();
+    renderSujetHistory();
+  }catch(err){
+    clearLoading('evalLoadingRow');
+    state.busy = false;
+    document.getElementById('evalBtn').disabled = false;
+    showError('evalLoadingRow', err.message || "Un souci est survenu — réessaie.");
+  }
+}
+function showLoadingIn(id, msg){ const el = document.getElementById(id); if(el) el.innerHTML = `<div class="loading-line">💬 ${escapeHtml(msg)}</div>`; }
+function clearLoading(id){ const el = document.getElementById(id); if(el) el.innerHTML=''; }
+
+/* ============== WRITING ============== */
+function renderWriting(main){
+  const categories = Object.keys(WRITING_PROMPTS[state.exam]);
+  main.innerHTML = `
+    <h2 class="section-title">Écrire avec Plume</h2>
+    <p class="lede">Choisis un type de tâche ${state.exam}, rédige ta réponse, puis demande une correction notée selon les critères du CECR.</p>
+    <div class="chip-row" id="catChips"></div>
+    <div id="promptArea"></div>
+    <textarea id="writingInput" rows="8" placeholder="Rédige ta réponse ici..."></textarea>
+    <div class="word-count" id="wordCount">0 mots</div>
+    <div class="composer" style="margin-top:10px;">
+      <button class="btn secondary" id="newPromptBtn">🔀 Nouveau sujet</button>
+      <button class="btn" id="submitWritingBtn">✅ Corriger ma copie</button>
+    </div>
+    <div id="loadingRow2"></div>
+    <div id="feedbackArea"></div>
+  `;
+  const categories2 = categories;
+  const catChips = document.getElementById('catChips');
+  if(!state.writingCategory || !categories2.includes(state.writingCategory)) state.writingCategory = categories2[0];
+  catChips.innerHTML = categories2.map(c=>`<div class="chip ${state.writingCategory===c?'active':''}" data-cat="${c}">${c}</div>`).join('');
+  catChips.querySelectorAll('.chip').forEach(c=>{ c.onclick = ()=>{ state.writingCategory=c.dataset.cat; state.currentPrompt=null; renderWriting(main); }; });
+  if(!state.currentPrompt){ pickNewPrompt(); }
+  renderPromptCard();
+  const input = document.getElementById('writingInput');
+  input.addEventListener('input', ()=>{ const words = input.value.trim().split(/\s+/).filter(Boolean).length; document.getElementById('wordCount').textContent = words + ' mots'; });
+  document.getElementById('newPromptBtn').onclick = ()=>{ pickNewPrompt(); renderPromptCard(); };
+  document.getElementById('submitWritingBtn').onclick = submitWriting;
+}
+function pickNewPrompt(){ const list = WRITING_PROMPTS[state.exam][state.writingCategory]; state.currentPrompt = list[Math.floor(Math.random()*list.length)]; }
+function renderPromptCard(){ document.getElementById('promptArea').innerHTML = `<div class="prompt-card"><div class="k">${state.exam} · ${state.writingCategory}</div><div class="txt">${escapeHtml(state.currentPrompt)}</div></div>`; }
+function writingSystemPrompt(){
+  return `Tu es Plume, un correcteur expert de français pour la préparation au ${state.exam} (niveau visé: ${state.level} du CECR).
+Évalue la copie et réponds UNIQUEMENT en JSON valide, sans texte hors JSON, sans markdown:
+{"band":"niveau CECR estimé, ex A2/B1/B2/C1","scores":{"adequation":0-10,"coherence":0-10,"vocabulaire":0-10,"grammaire":0-10,"registre":0-10},"corrected_html":"la copie corrigée en HTML simple, chaque erreur marquée <del>original</del><ins>correction</ins>, reste inchangé","notes":["3 à 5 conseils courts en français"],"encouragement":"une phrase encourageante sincère"}`;
+}
+async function submitWriting(){
+  const input = document.getElementById('writingInput');
+  const text = input.value.trim();
+  if(!text || state.busy) return;
+  state.busy = true;
+  document.getElementById('submitWritingBtn').disabled = true;
+  showLoadingIn('loadingRow2', "Plume corrige ta copie...");
+  document.getElementById('feedbackArea').innerHTML='';
+  try{
+    const userMsg = `Sujet: ${state.currentPrompt}\n\nCopie de l'étudiant:\n${text}`;
+    const raw = await callClaude(writingSystemPrompt(), [{role:'user', content:userMsg}], 1000);
+    const parsed = parseJsonLoose(raw);
+    if(!parsed) throw new Error("Plume n'a pas pu analyser la copie — réessaie.");
+    clearLoading('loadingRow2');
+    state.busy = false;
+    document.getElementById('submitWritingBtn').disabled = false;
+    const stampClass = /C1|B2/.test(parsed.band) ? 'green' : (/A1|A2/.test(parsed.band) ? 'red' : '');
+    const scores = parsed.scores || {};
+    const rubricLabels = {adequation:'Adéquation', coherence:'Cohérence', vocabulaire:'Vocabulaire', grammaire:'Grammaire', registre:'Registre'};
+    document.getElementById('feedbackArea').innerHTML = `
+      <div class="feedback">
+        <div class="stamp ${stampClass}">Niveau ${escapeHtml(parsed.band||'?')}</div>
+        <div class="rubric">
+          ${Object.entries(rubricLabels).map(([k,label])=>`<div class="rubric-row"><div class="label">${label}</div><div class="bar"><i style="width:${((scores[k]||0)/10)*100}%"></i></div><div>${scores[k]!=null?scores[k]:'—'}/10</div></div>`).join('')}
+        </div>
+        <div class="annot-block">${parsed.corrected_html || escapeHtml(text)}</div>
+        <div class="notes-title">Pistes de progrès</div>
+        ${(parsed.notes||[]).map(n=>`<div class="note-line">${escapeHtml(n)}</div>`).join('')}
+        <p style="font-weight:800; color:var(--green); margin-top:14px;">${escapeHtml(parsed.encouragement||'')}</p>
+      </div>
+    `;
+    state.writingSubs.unshift({ date:new Date().toISOString(), exam:state.exam, category:state.writingCategory, prompt:state.currentPrompt, band:parsed.band, scores });
+    saveWriting();
+  }catch(err){
+    clearLoading('loadingRow2');
+    state.busy = false;
+    document.getElementById('submitWritingBtn').disabled = false;
+    showError('loadingRow2', err.message || "Un souci est survenu — réessaie.");
+  }
+}
+
+/* ============== CARNET ============== */
+function renderCarnet(main){
+  const avgBand = state.writingSubs.length ? mostCommon(state.writingSubs.map(w=>w.band)) : '—';
+  main.innerHTML = `
+    <h2 class="section-title">Mon carnet</h2>
+    <p class="lede">Un aperçu de tes progrès à l'oral et à l'écrit. Pour le suivi du vocabulaire, va voir l'onglet Vocabulaire / Thèmes.</p>
+    <div class="stat-row">
+      <div class="stat"><div class="n">${state.writingSubs.length}</div><div class="l">Copies corrigées</div></div>
+      <div class="stat"><div class="n">${state.speakingHistory.filter(m=>m.role==='user').length}</div><div class="l">Tours de parole libre</div></div>
+      <div class="stat"><div class="n">${Object.values(state.topicSpeakHistory).reduce((a,arr)=>a+arr.length,0)}</div><div class="l">Réponses sur sujets</div></div>
+      <div class="stat"><div class="n">${avgBand}</div><div class="l">Niveau + fréquent</div></div>
+      <div class="stat"><div class="n">${state.errorLog.length}</div><div class="l">Erreurs notées</div></div>
+    </div>
+    <h2 class="section-title" style="font-size:18px;">Carnet d'erreurs</h2>
+    <div id="errList"></div>
+    <div style="margin-top:24px;"><button class="reset-link" id="resetBtn">Réinitialiser mes données (oral/écrit)</button></div>
+  `;
+  const errList = document.getElementById('errList');
+  if(state.errorLog.length===0){
+    errList.innerHTML = `<p class="empty">Aucune erreur enregistrée pour l'instant — continue à parler et écrire avec Plume.</p>`;
+  }else{
+    errList.innerHTML = state.errorLog.slice(0,40).map(e=>`<div class="err-item"><span class="o">${escapeHtml(e.original)}</span> → <span class="c">${escapeHtml(e.corrected)}</span><span class="w">${escapeHtml(e.explanation||'')} · ${e.source||''}</span></div>`).join('');
+  }
+  document.getElementById('resetBtn').onclick = ()=>{
+    if(!confirm('Effacer ton historique de conversation, tes copies et tes erreurs ?')) return;
+    state.speakingHistory=[]; state.writingSubs=[]; state.errorLog=[]; state.topicSpeakHistory={};
+    saveSpeaking(); saveWriting(); saveErrors(); saveTopicSpeakHistory();
+    renderMain();
+  };
+}
+function mostCommon(arr){
+  const counts={}; arr.forEach(v=>counts[v]=(counts[v]||0)+1);
+  let best=null,bestN=0;
+  for(const k in counts){ if(counts[k]>bestN){best=k;bestN=counts[k];} }
+  return best||'—';
+}
+
+/* ============== INIT ============== */
+async function init(){
+  document.getElementById('loadArea').innerHTML = `<p class="loading-line">Chargement des données...</p>`;
+  try{
+    [TOPICS, SPEAKING_TOPICS, WRITING_PROMPTS] = await Promise.all([
+      loadJSON('../data/themes.json'),
+      loadJSON('../data/speaking-topics.json'),
+      loadJSON('../data/writing-prompts.json')
+    ]);
+    TOPIC_NAMES = Object.keys(TOPICS);
+    document.getElementById('loadArea').innerHTML = '';
+    if(!window.PLUME_API_ENDPOINT){
+      document.getElementById('loadArea').innerHTML = `<div class="warn-line">⚙️ L'assistant IA n'est pas encore configuré (voir README pour déployer le proxy en 5 min). Les pages Vocabulaire/Thèmes/Grammaire fonctionnent déjà sans IA.</div>`;
+    }
+    renderMain();
+  }catch(err){
+    document.getElementById('loadArea').innerHTML = `<div class="error-line">⚠️ ${escapeHtml(err.message)} — si tu as ouvert ce fichier directement (file://), lance un serveur local ou consulte via GitHub Pages.</div>`;
+  }
+}
+init();
+</script>
+</body>
+</html>
