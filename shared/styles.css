@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root{
+  --bg:#FFF7EC;
+  --card:#FFFFFF;
+  --ink:#25293A;
+  --ink-soft:#6B6F84;
+  --blue:#3B6BFF;
+  --blue-soft:#EAF0FF;
+  --coral:#FF6B5E;
+  --coral-soft:#FFEDE9;
+  --yellow:#FFC44D;
+  --yellow-soft:#FFF6DF;
+  --green:#2FB380;
+  --green-soft:#E6F8F0;
+  --purple:#8B5CF6;
+  --purple-soft:#F1EBFF;
+  --shadow: 0 6px 0 rgba(37,41,58,0.10);
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);}
+body{ font-family:'Nunito', sans-serif; color:var(--ink); min-height:100vh; }
+a{ color:inherit; }
+.app{ max-width:920px; margin:0 auto; min-height:100vh; padding:0 0 60px; }
+
+header.top{ display:flex; align-items:center; gap:16px; padding:26px 24px 18px; }
+.avatar-wrap{ width:56px; height:56px; border-radius:18px; background:var(--yellow-soft); display:flex; align-items:center; justify-content:center; border:3px solid var(--ink); box-shadow: var(--shadow); flex-shrink:0; }
+.brand-name{ font-family:'Baloo 2', sans-serif; font-weight:800; font-size:24px; color:var(--ink); line-height:1; text-decoration:none; }
+.brand-tag{ font-size:12.5px; font-weight:700; color:var(--blue); margin-top:4px; }
+.head-right{ margin-left:auto; display:flex; gap:8px; }
+select.pill-select{ font-family:'Nunito',sans-serif; font-weight:700; font-size:13px; background:var(--card); border:2.5px solid var(--ink); border-radius:999px; padding:8px 14px; color:var(--ink); cursor:pointer; }
+
+nav.top-nav{ display:flex; gap:8px; padding:4px 24px 20px; flex-wrap:wrap; }
+.nav-link{ font-family:'Baloo 2', sans-serif; font-weight:700; font-size:14px; padding:10px 16px; cursor:pointer; background:var(--card); border:2.5px solid var(--ink); border-radius:999px; color:var(--ink-soft); text-decoration:none; display:inline-block; }
+.nav-link.active{ background:var(--blue); color:#fff; border-color:var(--blue); box-shadow: var(--shadow); }
+
+main{ padding:0 24px; min-height:55vh; }
+h1.page-title{ font-family:'Baloo 2', sans-serif; font-size:30px; font-weight:800; margin:8px 0 6px; }
+h2.section-title{ font-family:'Baloo 2', sans-serif; font-size:22px; font-weight:800; margin:4px 0 8px; }
+p.lede{ color:var(--ink-soft); font-size:14px; line-height:1.6; margin:0 0 18px; max-width:64ch; font-weight:600;}
+
+.chip-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px; max-height:150px; overflow-y:auto; padding:4px 2px; }
+.chip{ font-family:'Nunito',sans-serif; font-weight:700; font-size:13px; padding:8px 14px; border:2.5px solid var(--ink); border-radius:999px; cursor:pointer; background:var(--card); color:var(--ink); white-space:nowrap; }
+.chip.active{ background:var(--coral); color:#fff; border-color:var(--coral); }
+
+.btn{ font-family:'Baloo 2',sans-serif; font-weight:700; font-size:14px; padding:12px 20px; border-radius:999px; border:2.5px solid var(--ink); background:var(--green); color:#fff; cursor:pointer; white-space:nowrap; box-shadow: var(--shadow); }
+.btn.secondary{ background:var(--card); color:var(--ink); }
+.btn.blue{ background:var(--blue); }
+.btn.purple{ background:var(--purple); }
+.btn.coral{ background:var(--coral); }
+.btn.sm{ padding:8px 14px; font-size:12.5px; box-shadow:none; }
+.btn:disabled{ opacity:0.5; cursor:default; box-shadow:none; }
+.btn:active:not(:disabled){ transform:translateY(3px); box-shadow:none; }
+.icon-btn{ display:inline-flex; align-items:center; gap:6px; }
+
+textarea, input.text-in{ font-family:'Nunito',sans-serif; font-weight:600; font-size:14px; width:100%; border:2.5px solid var(--ink); border-radius:16px; background:var(--card); padding:12px 14px; resize:none; color:var(--ink); }
+.composer{ display:flex; gap:8px; align-items:flex-end; }
+
+.card{ border:2.5px solid var(--ink); border-radius:18px; padding:18px 20px; background:var(--card); box-shadow: var(--shadow); }
+.card.purple-soft{ background:var(--purple-soft); }
+.dash-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(230px,1fr)); gap:16px; margin-top:10px; }
+.dash-card{ border:2.5px solid var(--ink); border-radius:20px; padding:20px; background:var(--card); box-shadow: var(--shadow); text-decoration:none; color:var(--ink); display:block; transition:transform .12s ease; }
+.dash-card:hover{ transform:translateY(-3px); }
+.dash-card .emoji{ font-size:30px; }
+.dash-card h3{ font-family:'Baloo 2',sans-serif; font-size:19px; margin:10px 0 6px; }
+.dash-card p{ font-size:13px; color:var(--ink-soft); font-weight:600; line-height:1.5; margin:0; }
+
+.stat-row{ display:flex; gap:12px; flex-wrap:wrap; margin-bottom:24px; }
+.stat{ border:2.5px solid var(--ink); border-radius:16px; padding:14px 18px; min-width:110px; background:var(--card); }
+.stat .n{ font-family:'Baloo 2',sans-serif; font-size:26px; font-weight:800; color:var(--blue); }
+.stat .l{ font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.03em; color:var(--ink-soft); margin-top:2px;}
+
+.loading-line{ font-size:13px; font-weight:700; color:var(--blue); }
+.error-line{ font-size:13px; font-weight:700; color:var(--coral); background:var(--coral-soft); border:2px solid var(--coral); border-radius:12px; padding:10px 14px; margin:8px 0; }
+.warn-line{ font-size:12.5px; font-weight:700; color:#946200; background:var(--yellow-soft); border:2px solid var(--yellow); border-radius:12px; padding:10px 14px; margin:8px 0; }
+.empty{ color:var(--ink-soft); font-size:14px; font-weight:700; }
+.reset-link{ font-size:12px; font-weight:700; color:var(--ink-soft); text-decoration:underline; cursor:pointer; background:none; border:none; font-family:'Nunito',sans-serif; padding:0;}
+
+footer.site-footer{ padding:30px 24px; text-align:center; font-size:12px; color:var(--ink-soft); font-weight:600; }
