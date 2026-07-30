@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Plume — TCF/TEF Prep</title>
+<link rel="stylesheet" href="shared/styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="top" id="plumeHeader"></header>
+  <nav class="top-nav" id="plumeNav"></nav>
+  <main>
+    <h1 class="page-title">Prépare ton TCF / TEF avec Plume</h1>
+    <p class="lede">Vocabulaire par thème, grammaire, et un buddy IA pour t'entraîner à l'oral et à l'écrit — tout est sauvegardé automatiquement dans ce navigateur.</p>
+
+    <div class="stat-row" id="statsRow"></div>
+
+    <div class="dash-grid">
+      <a class="dash-card" href="vocabulary.html">
+        <div class="emoji">🔤</div>
+        <h3>Vocabulaire</h3>
+        <p>Liste de mots par thème avec révision animée en deux piles (connu / à revoir), inspirée d'Anki.</p>
+      </a>
+      <a class="dash-card" href="themes/index.html">
+        <div class="emoji">🗂️</div>
+        <h3>Thèmes</h3>
+        <p>21 thèmes officiels (environnement, travail, immigration, santé...) avec ta progression par thème.</p>
+      </a>
+      <a class="dash-card" href="grammar.html">
+        <div class="emoji">📐</div>
+        <h3>Grammaire</h3>
+        <p>Règles essentielles (subjonctif, passé composé, accords...) avec des exercices auto-corrigés.</p>
+      </a>
+      <a class="dash-card" href="ai/speaking_coach.html">
+        <div class="emoji">🎙️</div>
+        <h3>Plume — ton buddy IA</h3>
+        <p>Conversation à l'oral, questions ciblées par thème avec audio, et correction de tes copies écrites.</p>
+      </a>
+    </div>
+  </main>
+  <footer class="site-footer">Fait avec Plume · Tes données restent dans ce navigateur</footer>
+</div>
+
+<script src="shared/app.js"></script>
+<script>
+renderPlumeHeader('home', '');
+
+function computeStats(){
+  let known=0, total=0;
+  fetch('data/themes.json').then(r=>r.json()).then(TOPICS=>{
+    const vocabProgress = PlumeStorage.get('plume:vocab-progress', {});
+    Object.entries(TOPICS).forEach(([topic, words])=>{
+      words.forEach(w=>{
+        total++;
+        const st = vocabProgress[topic+'::'+w.w];
+        if(st && st.status==='known') known++;
+      });
+    });
+    const writingSubs = PlumeStorage.get('plume:writing-submissions', []);
+    const errorLog = PlumeStorage.get('plume:error-log', []);
+    const topicSpeak = PlumeStorage.get('plume:topic-speaking-history', {});
+    const topicSpeakCount = Object.values(topicSpeak).reduce((a,arr)=>a+arr.length,0);
+
+    document.getElementById('statsRow').innerHTML = `
+      <div class="stat"><div class="n">${known}/${total}</div><div class="l">Mots connus</div></div>
+      <div class="stat"><div class="n">${writingSubs.length}</div><div class="l">Copies corrigées</div></div>
+      <div class="stat"><div class="n">${topicSpeakCount}</div><div class="l">Réponses orales évaluées</div></div>
+      <div class="stat"><div class="n">${errorLog.length}</div><div class="l">Erreurs notées</div></div>
+    `;
+  }).catch(()=>{
+    document.getElementById('statsRow').innerHTML = `<p class="empty">Ouvre ce site via GitHub Pages (ou un serveur local) pour voir tes statistiques — le chargement des données ne fonctionne pas en ouvrant le fichier directement.</p>`;
+  });
+}
+computeStats();
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Grammaire — Plume</title>
+<link rel="stylesheet" href="shared/styles.css">
+<style>
+.gram-card{ border:2.5px solid var(--ink); border-radius:18px; padding:18px 20px; background:var(--card); box-shadow:var(--shadow); margin-bottom:16px; }
+.gram-card h3{ font-family:'Baloo 2',sans-serif; font-size:19px; margin:0 0 8px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; }
+.gram-card .explanation{ font-size:13.5px; line-height:1.7; font-weight:600; color:var(--ink-soft); margin-bottom:10px; }
+.gram-card .examples{ background:var(--blue-soft); border-radius:12px; padding:10px 14px; margin-bottom:14px; }
+.gram-card .examples div{ font-size:13px; font-weight:700; margin-bottom:4px; }
+.drill{ border-top:2px dashed #e5e0d3; padding-top:12px; margin-top:12px; }
+.drill .q{ font-size:14px; font-weight:700; margin-bottom:8px; }
+.drill .choices{ display:flex; gap:8px; flex-wrap:wrap; }
+.choice-btn{ font-family:'Nunito',sans-serif; font-weight:700; font-size:13px; padding:8px 14px; border:2px solid var(--ink); border-radius:999px; cursor:pointer; background:var(--card); }
+.choice-btn.correct{ background:var(--green); color:#fff; border-color:var(--green); }
+.choice-btn.wrong{ background:var(--coral); color:#fff; border-color:var(--coral); }
+.body-collapsed{ display:none; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top" id="plumeHeader"></header>
+  <nav class="top-nav" id="plumeNav"></nav>
+  <main>
+    <h1 class="page-title">Grammaire</h1>
+    <p class="lede">Les points de grammaire les plus utiles pour le TCF/TEF, avec des exercices corrigés instantanément (pas besoin de connexion IA pour cette page).</p>
+    <div id="loadArea"><p class="loading-line">Chargement...</p></div>
+    <div id="gramList"></div>
+  </main>
+  <footer class="site-footer">Fait avec Plume · Tes données restent dans ce navigateur</footer>
+</div>
+
+<script src="shared/app.js"></script>
+<script>
+renderPlumeHeader('grammar', '');
+
+async function init(){
+  try{
+    const topics = await loadJSON('data/grammar.json');
+    document.getElementById('loadArea').innerHTML = '';
+    const list = document.getElementById('gramList');
+    list.innerHTML = topics.map((t,ti)=>`
+      <div class="gram-card">
+        <h3 data-idx="${ti}">${escapeHtml(t.title)} <span>▾</span></h3>
+        <div class="body-collapsed" id="body-${ti}">
+          <div class="explanation">${escapeHtml(t.explanation)}</div>
+          <div class="examples">${t.examples.map(e=>`<div>• ${escapeHtml(e)}</div>`).join('')}</div>
+          ${t.drills.map((d,di)=>`
+            <div class="drill">
+              <div class="q">${escapeHtml(d.q)}</div>
+              <div class="choices" data-topic="${ti}" data-drill="${di}">
+                ${d.choices.map(c=>`<button class="choice-btn" data-choice="${escapeHtml(c)}">${escapeHtml(c)}</button>`).join('')}
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+
+    list.querySelectorAll('h3').forEach(h=>{
+      h.onclick = ()=>{
+        const idx = h.dataset.idx;
+        const body = document.getElementById('body-'+idx);
+        body.style.display = body.style.display==='block' ? 'none' : 'block';
+      };
+    });
+    // open first by default
+    const firstBody = document.getElementById('body-0');
+    if(firstBody) firstBody.style.display = 'block';
+
+    list.querySelectorAll('.choices').forEach(row=>{
+      const ti = row.dataset.topic, di = row.dataset.drill;
+      const answer = topics[ti].drills[di].answer;
+      row.querySelectorAll('.choice-btn').forEach(btn=>{
+        btn.onclick = ()=>{
+          const isCorrect = btn.dataset.choice === answer;
+          row.querySelectorAll('.choice-btn').forEach(b=>{ b.classList.remove('correct','wrong'); b.disabled = true; });
+          btn.classList.add(isCorrect ? 'correct' : 'wrong');
+          if(!isCorrect){
+            const correctBtn = [...row.querySelectorAll('.choice-btn')].find(b=>b.dataset.choice===answer);
+            if(correctBtn) correctBtn.classList.add('correct');
+          }
+        };
+      });
+    });
+  }catch(err){
+    document.getElementById('loadArea').innerHTML = `<div class="error-line">⚠️ ${escapeHtml(err.message)}</div>`;
+  }
+}
+init();
+</script>
+</body>
+</html>

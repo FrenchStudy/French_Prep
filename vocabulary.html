@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Vocabulaire — Plume</title>
+<link rel="stylesheet" href="shared/styles.css">
+<style>
+.bin-row{ display:flex; gap:12px; margin-bottom:20px; }
+.bin{ flex:1; border:2.5px solid var(--ink); border-radius:16px; padding:12px 16px; text-align:center; }
+.bin.known{ background:var(--green-soft); }
+.bin.learning{ background:var(--yellow-soft); }
+.bin .n{ font-family:'Baloo 2',sans-serif; font-size:24px; font-weight:800; }
+.bin.known .n{ color:var(--green); }
+.bin.learning .n{ color:#946200; }
+.bin .l{ font-size:11px; font-weight:700; text-transform:uppercase; color:var(--ink-soft); }
+.card-stage{ position:relative; min-height:280px; display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+.flashcard{
+  width:100%; max-width:420px; min-height:220px; background:var(--card); border:3px solid var(--ink); border-radius:24px;
+  box-shadow: var(--shadow); padding:26px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; cursor:pointer; transition: transform .28s ease, opacity .28s ease; user-select:none;
+}
+.flashcard.leech{ border-color:var(--coral); }
+.flashcard.exit-right{ transform: translateX(140%) rotate(12deg); opacity:0; }
+.flashcard.exit-left{ transform: translateX(-140%) rotate(-12deg); opacity:0; }
+.flashcard .gender{ font-size:12px; font-weight:800; color:var(--purple); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px; }
+.flashcard .topic-tag{ font-size:11px; font-weight:700; color:var(--ink-soft); margin-bottom:8px; }
+.flashcard .word{ font-family:'Baloo 2',sans-serif; font-size:28px; font-weight:800; }
+.flashcard .leech-tag{ margin-top:8px; font-size:11px; font-weight:800; color:var(--coral); background:var(--coral-soft); padding:4px 10px; border-radius:999px; }
+.flashcard .reveal{ margin-top:14px; padding-top:14px; border-top:2px dashed #e5e0d3; width:100%; }
+.flashcard .en{ font-weight:800; color:var(--blue); font-size:16px; }
+.flashcard .ex{ font-size:13px; font-weight:600; color:var(--ink-soft); margin-top:6px; font-style:italic; }
+.flashcard .tap-hint{ font-size:11px; font-weight:700; color:var(--ink-soft); margin-top:12px; }
+.swipe-row{ display:flex; gap:14px; justify-content:center; }
+.swipe-btn{ font-family:'Baloo 2',sans-serif; font-weight:800; font-size:15px; padding:14px 26px; border-radius:999px; border:2.5px solid var(--ink); cursor:pointer; box-shadow: var(--shadow); }
+.swipe-btn.no{ background:var(--yellow-soft); color:#946200; }
+.swipe-btn.yes{ background:var(--green); color:#fff; }
+.swipe-btn:active{ transform:translateY(3px); box-shadow:none; }
+.session-summary{ text-align:center; padding:30px 20px; }
+.session-summary .big{ font-family:'Baloo 2',sans-serif; font-size:20px; font-weight:800; margin-bottom:10px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top" id="plumeHeader"></header>
+  <nav class="top-nav" id="plumeNav"></nav>
+  <main>
+    <h1 class="page-title">Vocabulaire</h1>
+    <p class="lede">Choisis « Tous les thèmes » pour réviser l'ensemble de la liste, ou filtre sur un thème précis. Touche la carte pour révéler le sens, puis classe le mot.</p>
+    <div class="chip-row" id="topicChips"></div>
+    <div class="bin-row">
+      <div class="bin known"><div class="n" id="knownCount">0</div><div class="l">Connu ✅</div></div>
+      <div class="bin learning"><div class="n" id="learningCount">0</div><div class="l">À revoir 🔁</div></div>
+    </div>
+    <div id="loadArea"><p class="loading-line">Chargement du vocabulaire...</p></div>
+    <div id="vocabStage"></div>
+  </main>
+  <footer class="site-footer">Fait avec Plume · Tes données restent dans ce navigateur</footer>
+</div>
+
+<script src="shared/app.js"></script>
+<script>
+renderPlumeHeader('vocab', '');
+
+let TOPICS = {};
+let TOPIC_NAMES = [];
+let currentTopic = 'ALL';
+let vocabProgress = {};
+let sessionQueue = [];
+let sessionKnown = 0, sessionLearning = 0;
+
+function wordKey(topic, w){ return topic + '::' + w; }
+function getWordState(topic, w){
+  const k = wordKey(topic, w);
+  if(!vocabProgress[k]) vocabProgress[k] = { status:'new', correctStreak:0, wrongCount:0 };
+  return vocabProgress[k];
+}
+function saveProgress(){ PlumeStorage.set('plume:vocab-progress', vocabProgress); }
+
+function currentWordPool(){
+  if(currentTopic === 'ALL'){
+    let pool = [];
+    TOPIC_NAMES.forEach(t=> TOPICS[t].forEach(w=> pool.push({ topic:t, ...w })));
+    return pool;
+  }
+  return TOPICS[currentTopic].map(w=>({ topic:currentTopic, ...w }));
+}
+
+function updateBinCounts(){
+  const pool = currentWordPool();
+  let known=0, learning=0;
+  pool.forEach(w=>{ const st = getWordState(w.topic, w.w); if(st.status==='known') known++; else learning++; });
+  document.getElementById('knownCount').textContent = known;
+  document.getElementById('learningCount').textContent = learning;
+}
+
+function startSession(){
+  const pool = currentWordPool();
+  sessionQueue = shuffle(pool.map(w=>({ topic:w.topic, w:w.w })));
+  sessionKnown = 0; sessionLearning = 0;
+  updateBinCounts();
+  renderStage();
+}
+
+function renderStage(){
+  const stage = document.getElementById('vocabStage');
+  if(sessionQueue.length===0){
+    stage.innerHTML = `
+      <div class="session-summary">
+        <div class="big">Round terminé ! 🎉</div>
+        <p class="lede" style="margin:0 auto 16px;">${sessionKnown} mot(s) déplacé(s) vers Connu, ${sessionLearning} restent à pratiquer.</p>
+        <button class="btn" id="restartBtn">🔁 Refaire un round</button>
+      </div>`;
+    document.getElementById('restartBtn').onclick = startSession;
+    return;
+  }
+  const cur = sessionQueue[0];
+  const wd = TOPICS[cur.topic].find(x=>x.w===cur.w);
+  const st = getWordState(cur.topic, cur.w);
+  const isLeech = st.wrongCount >= 4;
+  stage.innerHTML = `
+    <div class="card-stage">
+      <div class="flashcard ${isLeech?'leech':''}" id="flashcard">
+        <div class="topic-tag">${escapeHtml(cur.topic)}</div>
+        ${wd.g ? `<div class="gender">${wd.g==='m'?'masculin (le)':'féminin (la)'}</div>` : ''}
+        <div class="word">${escapeHtml(wd.w)}</div>
+        ${isLeech ? `<div class="leech-tag">Mot difficile — révision renforcée</div>` : ''}
+        <div class="reveal" id="revealPart" style="display:${isLeech?'block':'none'};">
+          <div class="en">${escapeHtml(wd.en)}</div>
+          <div class="ex">${escapeHtml(wd.ex)}</div>
+        </div>
+        <div class="tap-hint" id="tapHint" style="display:${isLeech?'none':'block'};">👆 Touche la carte pour révéler</div>
+      </div>
+    </div>
+    <div class="swipe-row">
+      <button class="swipe-btn no" id="noBtn">🔁 À revoir</button>
+      <button class="swipe-btn yes" id="yesBtn">✅ Je sais</button>
+    </div>`;
+  const card = document.getElementById('flashcard');
+  card.onclick = ()=>{ document.getElementById('revealPart').style.display='block'; document.getElementById('tapHint').style.display='none'; };
+  document.getElementById('yesBtn').onclick = ()=>answerCard(true);
+  document.getElementById('noBtn').onclick = ()=>answerCard(false);
+}
+
+function answerCard(knew){
+  const cur = sessionQueue[0];
+  const st = getWordState(cur.topic, cur.w);
+  document.getElementById('flashcard').classList.add(knew?'exit-right':'exit-left');
+  if(knew){
+    st.correctStreak = (st.correctStreak||0)+1;
+    if(st.correctStreak>=2){ st.status='known'; } else { st.status='learning'; sessionQueue.push(cur); }
+    sessionKnown++;
+  }else{
+    st.correctStreak = 0;
+    st.wrongCount = (st.wrongCount||0)+1;
+    st.status='learning';
+    sessionQueue.push(cur);
+    sessionLearning++;
+  }
+  saveProgress();
+  setTimeout(()=>{ sessionQueue.shift(); updateBinCounts(); renderStage(); }, 260);
+}
+
+async function init(){
+  vocabProgress = PlumeStorage.get('plume:vocab-progress', {});
+  try{
+    TOPICS = await loadJSON('data/themes.json');
+    TOPIC_NAMES = Object.keys(TOPICS);
+    document.getElementById('loadArea').innerHTML='';
+
+    const params = new URLSearchParams(location.search);
+    const preselect = params.get('theme');
+    if(preselect && TOPIC_NAMES.includes(preselect)) currentTopic = preselect;
+
+    const chips = document.getElementById('topicChips');
+    const allNames = ['ALL', ...TOPIC_NAMES];
+    chips.innerHTML = allNames.map(t=>`<div class="chip ${currentTopic===t?'active':''}" data-t="${escapeHtml(t)}">${t==='ALL'?'Tous les thèmes':t}</div>`).join('');
+    chips.querySelectorAll('.chip').forEach(c=>{
+      c.onclick = ()=>{ currentTopic = c.dataset.t; chips.querySelectorAll('.chip').forEach(x=>x.classList.remove('active')); c.classList.add('active'); startSession(); };
+    });
+    startSession();
+  }catch(err){
+    document.getElementById('loadArea').innerHTML = `<div class="error-line">⚠️ ${escapeHtml(err.message)} — si tu as ouvert ce fichier directement (file://), lance un petit serveur local (ex: <code>python3 -m http.server</code>) ou consulte via GitHub Pages.</div>`;
+  }
+}
+init();
+</script>
+</body>
+</html>
