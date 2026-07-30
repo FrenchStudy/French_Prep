@@ -1,0 +1,25 @@
+{
+  "TCF": {
+    "Message informel": [
+      "Tu écris à un(e) ami(e) pour lui raconter un voyage récent qui ne s'est pas passé comme prévu. (60 mots minimum)",
+      "Un(e) ami(e) francophone va te rendre visite. Écris-lui un message pour organiser son séjour. (60 mots minimum)"
+    ],
+    "Texte argumentatif": [
+      "Selon vous, les réseaux sociaux rapprochent-ils ou éloignent-ils les gens ? Justifiez votre opinion avec des exemples. (120 mots minimum)",
+      "Le télétravail devrait-il devenir la norme ? Donnez votre avis en l'illustrant d'arguments. (120 mots minimum)"
+    ],
+    "Synthèse / commentaire": [
+      "Un journal a publié un article affirmant que les grandes villes devraient interdire les voitures individuelles. Commentez cette proposition. (150 mots minimum)"
+    ]
+  },
+  "TEF": {
+    "Section A — lettre/message": [
+      "Vous avez réservé une chambre d'hôtel, mais à votre arrivée elle ne correspond pas à la description. Écrivez à la direction pour vous plaindre. (80 mots minimum)",
+      "Écrivez à un(e) collègue pour proposer un changement dans l'organisation d'un projet commun. (80 mots minimum)"
+    ],
+    "Section B — texte argumentatif": [
+      "Certains pensent que l'intelligence artificielle va supprimer plus d'emplois qu'elle n'en crée. Qu'en pensez-vous ? (200 mots minimum)",
+      "Faut-il limiter le temps d'écran des enfants ? Développez votre point de vue avec des arguments et des exemples. (200 mots minimum)"
+    ]
+  }
+}

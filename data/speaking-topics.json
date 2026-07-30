@@ -1,0 +1,5 @@
+{
+  "entretien": { "label": "Entretien", "desc": "Questions personnelles sur toi, ta vie, tes habitudes." },
+  "description": { "label": "Description & opinion", "desc": "Décris une image ou une situation, puis donne ton avis." },
+  "debat": { "label": "Débat", "desc": "Défends un point de vue et réagis à des contre-arguments." }
+}

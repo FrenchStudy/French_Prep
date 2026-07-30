@@ -1,0 +1,1304 @@
+{
+  "Environnement": [
+    {
+      "w": "l'environnement",
+      "g": "m",
+      "en": "environment",
+      "ex": "Il faut protéger l'environnement."
+    },
+    {
+      "w": "la pollution",
+      "g": "f",
+      "en": "pollution",
+      "ex": "La pollution de l'air augmente en ville."
+    },
+    {
+      "w": "le réchauffement climatique",
+      "g": "m",
+      "en": "global warming",
+      "ex": "Le réchauffement climatique inquiète les scientifiques."
+    },
+    {
+      "w": "recycler",
+      "g": "",
+      "en": "to recycle",
+      "ex": "Nous recyclons le verre et le papier."
+    },
+    {
+      "w": "une énergie renouvelable",
+      "g": "f",
+      "en": "renewable energy",
+      "ex": "Le solaire est une énergie renouvelable."
+    },
+    {
+      "w": "la déforestation",
+      "g": "f",
+      "en": "deforestation",
+      "ex": "La déforestation menace la biodiversité."
+    },
+    {
+      "w": "un déchet",
+      "g": "m",
+      "en": "waste",
+      "ex": "Il jette ses déchets dans la bonne poubelle."
+    },
+    {
+      "w": "protéger",
+      "g": "",
+      "en": "to protect",
+      "ex": "On doit protéger les espèces menacées."
+    },
+    {
+      "w": "durable",
+      "g": "",
+      "en": "sustainable",
+      "ex": "Elle choisit un mode de vie durable."
+    },
+    {
+      "w": "la biodiversité",
+      "g": "f",
+      "en": "biodiversity",
+      "ex": "La biodiversité diminue rapidement."
+    }
+  ],
+  "Santé": [
+    {
+      "w": "la santé",
+      "g": "f",
+      "en": "health",
+      "ex": "Sa santé s'est améliorée."
+    },
+    {
+      "w": "un médecin",
+      "g": "m",
+      "en": "doctor",
+      "ex": "J'ai rendez-vous chez le médecin."
+    },
+    {
+      "w": "une maladie",
+      "g": "f",
+      "en": "illness",
+      "ex": "Cette maladie est bien soignée aujourd'hui."
+    },
+    {
+      "w": "guérir",
+      "g": "",
+      "en": "to heal/recover",
+      "ex": "Il a guéri après deux semaines."
+    },
+    {
+      "w": "un traitement",
+      "g": "m",
+      "en": "treatment",
+      "ex": "Le traitement dure trois mois."
+    },
+    {
+      "w": "l'hôpital",
+      "g": "m",
+      "en": "hospital",
+      "ex": "Elle travaille à l'hôpital du quartier."
+    },
+    {
+      "w": "une ordonnance",
+      "g": "f",
+      "en": "prescription",
+      "ex": "Le pharmacien lit l'ordonnance."
+    },
+    {
+      "w": "vacciner",
+      "g": "",
+      "en": "to vaccinate",
+      "ex": "On vaccine les enfants chaque année."
+    },
+    {
+      "w": "le bien-être",
+      "g": "m",
+      "en": "well-being",
+      "ex": "Le sport améliore le bien-être."
+    },
+    {
+      "w": "soigner",
+      "g": "",
+      "en": "to treat/care for",
+      "ex": "L'infirmière soigne les patients."
+    }
+  ],
+  "Travail": [
+    {
+      "w": "un emploi",
+      "g": "m",
+      "en": "job",
+      "ex": "Elle cherche un emploi stable."
+    },
+    {
+      "w": "un employeur",
+      "g": "m",
+      "en": "employer",
+      "ex": "Son employeur lui offre une formation."
+    },
+    {
+      "w": "le chômage",
+      "g": "m",
+      "en": "unemployment",
+      "ex": "Le taux de chômage a baissé."
+    },
+    {
+      "w": "un salaire",
+      "g": "m",
+      "en": "salary",
+      "ex": "Le salaire est versé chaque mois."
+    },
+    {
+      "w": "une entreprise",
+      "g": "f",
+      "en": "company",
+      "ex": "Il a créé sa propre entreprise."
+    },
+    {
+      "w": "postuler",
+      "g": "",
+      "en": "to apply",
+      "ex": "J'ai postulé pour ce poste."
+    },
+    {
+      "w": "un entretien",
+      "g": "m",
+      "en": "interview",
+      "ex": "L'entretien s'est très bien passé."
+    },
+    {
+      "w": "démissionner",
+      "g": "",
+      "en": "to resign",
+      "ex": "Elle a démissionné le mois dernier."
+    },
+    {
+      "w": "un collègue",
+      "g": "m",
+      "en": "colleague",
+      "ex": "Mon collègue m'a beaucoup aidé."
+    },
+    {
+      "w": "la retraite",
+      "g": "f",
+      "en": "retirement",
+      "ex": "Il part à la retraite cette année."
+    }
+  ],
+  "Immigration": [
+    {
+      "w": "un immigrant",
+      "g": "m",
+      "en": "immigrant",
+      "ex": "Beaucoup d'immigrants s'installent ici."
+    },
+    {
+      "w": "la citoyenneté",
+      "g": "f",
+      "en": "citizenship",
+      "ex": "Elle a obtenu la citoyenneté l'an dernier."
+    },
+    {
+      "w": "un visa",
+      "g": "m",
+      "en": "visa",
+      "ex": "Il attend son visa de travail."
+    },
+    {
+      "w": "s'intégrer",
+      "g": "",
+      "en": "to integrate",
+      "ex": "Ils s'intègrent bien dans la communauté."
+    },
+    {
+      "w": "la résidence permanente",
+      "g": "f",
+      "en": "permanent residency",
+      "ex": "Elle a demandé la résidence permanente."
+    },
+    {
+      "w": "un permis de travail",
+      "g": "m",
+      "en": "work permit",
+      "ex": "Son permis de travail expire bientôt."
+    },
+    {
+      "w": "accueillir",
+      "g": "",
+      "en": "to welcome",
+      "ex": "Le pays accueille de nombreux réfugiés."
+    },
+    {
+      "w": "une démarche administrative",
+      "g": "f",
+      "en": "administrative process",
+      "ex": "Cette démarche administrative prend du temps."
+    },
+    {
+      "w": "un formulaire",
+      "g": "m",
+      "en": "form",
+      "ex": "Il faut remplir ce formulaire."
+    },
+    {
+      "w": "la langue officielle",
+      "g": "f",
+      "en": "official language",
+      "ex": "Le français est une langue officielle."
+    }
+  ],
+  "Logement": [
+    {
+      "w": "un appartement",
+      "g": "m",
+      "en": "apartment",
+      "ex": "Ils louent un appartement en ville."
+    },
+    {
+      "w": "un loyer",
+      "g": "m",
+      "en": "rent",
+      "ex": "Le loyer augmente chaque année."
+    },
+    {
+      "w": "un propriétaire",
+      "g": "m",
+      "en": "landlord",
+      "ex": "Le propriétaire refuse les animaux."
+    },
+    {
+      "w": "déménager",
+      "g": "",
+      "en": "to move house",
+      "ex": "Nous déménageons le mois prochain."
+    },
+    {
+      "w": "un bail",
+      "g": "m",
+      "en": "lease",
+      "ex": "Le bail dure douze mois."
+    },
+    {
+      "w": "un quartier",
+      "g": "m",
+      "en": "neighborhood",
+      "ex": "C'est un quartier calme et sûr."
+    },
+    {
+      "w": "louer",
+      "g": "",
+      "en": "to rent",
+      "ex": "Elle loue un studio près du travail."
+    },
+    {
+      "w": "une hypothèque",
+      "g": "f",
+      "en": "mortgage",
+      "ex": "Ils remboursent leur hypothèque."
+    },
+    {
+      "w": "meublé",
+      "g": "",
+      "en": "furnished",
+      "ex": "L'appartement est entièrement meublé."
+    },
+    {
+      "w": "le voisinage",
+      "g": "m",
+      "en": "neighborhood/neighbors",
+      "ex": "Le voisinage est très accueillant."
+    }
+  ],
+  "Éducation": [
+    {
+      "w": "une école",
+      "g": "f",
+      "en": "school",
+      "ex": "Les enfants marchent jusqu'à l'école."
+    },
+    {
+      "w": "un diplôme",
+      "g": "m",
+      "en": "diploma",
+      "ex": "Il a obtenu son diplôme en juin."
+    },
+    {
+      "w": "un enseignant",
+      "g": "m",
+      "en": "teacher",
+      "ex": "L'enseignant explique la leçon."
+    },
+    {
+      "w": "apprendre",
+      "g": "",
+      "en": "to learn",
+      "ex": "Elle apprend le français depuis un an."
+    },
+    {
+      "w": "un examen",
+      "g": "m",
+      "en": "exam",
+      "ex": "L'examen aura lieu vendredi."
+    },
+    {
+      "w": "une bourse d'études",
+      "g": "f",
+      "en": "scholarship",
+      "ex": "Il a reçu une bourse d'études."
+    },
+    {
+      "w": "s'inscrire",
+      "g": "",
+      "en": "to enroll",
+      "ex": "Je me suis inscrit à l'université."
+    },
+    {
+      "w": "un cursus",
+      "g": "m",
+      "en": "curriculum",
+      "ex": "Ce cursus dure trois ans."
+    },
+    {
+      "w": "échouer",
+      "g": "",
+      "en": "to fail",
+      "ex": "Il a échoué à son premier essai."
+    },
+    {
+      "w": "réussir",
+      "g": "",
+      "en": "to succeed",
+      "ex": "Elle a réussi tous ses examens."
+    }
+  ],
+  "Technologie": [
+    {
+      "w": "un ordinateur",
+      "g": "m",
+      "en": "computer",
+      "ex": "Mon ordinateur est très lent."
+    },
+    {
+      "w": "un logiciel",
+      "g": "m",
+      "en": "software",
+      "ex": "Ce logiciel facilite le travail."
+    },
+    {
+      "w": "internet",
+      "g": "m",
+      "en": "internet",
+      "ex": "Internet est indispensable aujourd'hui."
+    },
+    {
+      "w": "télécharger",
+      "g": "",
+      "en": "to download",
+      "ex": "J'ai téléchargé l'application hier."
+    },
+    {
+      "w": "une application",
+      "g": "f",
+      "en": "app",
+      "ex": "Cette application aide à apprendre le français."
+    },
+    {
+      "w": "l'intelligence artificielle",
+      "g": "f",
+      "en": "artificial intelligence",
+      "ex": "L'intelligence artificielle transforme le travail."
+    },
+    {
+      "w": "un réseau social",
+      "g": "m",
+      "en": "social network",
+      "ex": "Il passe trop de temps sur les réseaux sociaux."
+    },
+    {
+      "w": "pirater",
+      "g": "",
+      "en": "to hack",
+      "ex": "Son compte a été piraté."
+    },
+    {
+      "w": "un appareil",
+      "g": "m",
+      "en": "device",
+      "ex": "Cet appareil consomme peu d'énergie."
+    },
+    {
+      "w": "sécuriser",
+      "g": "",
+      "en": "to secure",
+      "ex": "Il faut sécuriser ses données personnelles."
+    }
+  ],
+  "Famille": [
+    {
+      "w": "les parents",
+      "g": "m",
+      "en": "parents",
+      "ex": "Ses parents habitent à la campagne."
+    },
+    {
+      "w": "un enfant",
+      "g": "m",
+      "en": "child",
+      "ex": "Ils ont deux enfants."
+    },
+    {
+      "w": "élever",
+      "g": "",
+      "en": "to raise",
+      "ex": "Élever des enfants demande de la patience."
+    },
+    {
+      "w": "un conjoint",
+      "g": "m",
+      "en": "spouse/partner",
+      "ex": "Son conjoint travaille à l'étranger."
+    },
+    {
+      "w": "la garde partagée",
+      "g": "f",
+      "en": "shared custody",
+      "ex": "Ils ont choisi la garde partagée."
+    },
+    {
+      "w": "un aîné",
+      "g": "m",
+      "en": "eldest",
+      "ex": "L'aîné aide souvent les plus jeunes."
+    },
+    {
+      "w": "divorcer",
+      "g": "",
+      "en": "to divorce",
+      "ex": "Ils ont divorcé l'an dernier."
+    },
+    {
+      "w": "la belle-famille",
+      "g": "f",
+      "en": "in-laws",
+      "ex": "Elle s'entend bien avec sa belle-famille."
+    },
+    {
+      "w": "un proche",
+      "g": "m",
+      "en": "close relative/loved one",
+      "ex": "Il a perdu un proche récemment."
+    },
+    {
+      "w": "le lien familial",
+      "g": "m",
+      "en": "family bond",
+      "ex": "Le lien familial reste très fort."
+    }
+  ],
+  "Voyages": [
+    {
+      "w": "un billet d'avion",
+      "g": "m",
+      "en": "plane ticket",
+      "ex": "J'ai réservé mon billet d'avion."
+    },
+    {
+      "w": "une valise",
+      "g": "f",
+      "en": "suitcase",
+      "ex": "Sa valise était trop lourde."
+    },
+    {
+      "w": "un passeport",
+      "g": "m",
+      "en": "passport",
+      "ex": "N'oublie pas ton passeport."
+    },
+    {
+      "w": "décoller",
+      "g": "",
+      "en": "to take off",
+      "ex": "L'avion décolle à huit heures."
+    },
+    {
+      "w": "une destination",
+      "g": "f",
+      "en": "destination",
+      "ex": "Le Portugal est une destination populaire."
+    },
+    {
+      "w": "un hébergement",
+      "g": "m",
+      "en": "accommodation",
+      "ex": "L'hébergement est inclus dans le prix."
+    },
+    {
+      "w": "un séjour",
+      "g": "m",
+      "en": "stay/trip",
+      "ex": "Notre séjour a duré dix jours."
+    },
+    {
+      "w": "explorer",
+      "g": "",
+      "en": "to explore",
+      "ex": "Ils adorent explorer de nouvelles villes."
+    },
+    {
+      "w": "un itinéraire",
+      "g": "m",
+      "en": "itinerary",
+      "ex": "Elle a préparé un itinéraire détaillé."
+    },
+    {
+      "w": "le décalage horaire",
+      "g": "m",
+      "en": "jet lag",
+      "ex": "Le décalage horaire est difficile à gérer."
+    }
+  ],
+  "Alimentation": [
+    {
+      "w": "un repas",
+      "g": "m",
+      "en": "meal",
+      "ex": "Le repas est prêt à midi."
+    },
+    {
+      "w": "équilibré",
+      "g": "",
+      "en": "balanced",
+      "ex": "Elle mange de façon équilibrée."
+    },
+    {
+      "w": "cuisiner",
+      "g": "",
+      "en": "to cook",
+      "ex": "Il aime cuisiner le week-end."
+    },
+    {
+      "w": "un ingrédient",
+      "g": "m",
+      "en": "ingredient",
+      "ex": "Il manque un ingrédient pour la recette."
+    },
+    {
+      "w": "une recette",
+      "g": "f",
+      "en": "recipe",
+      "ex": "Cette recette est très simple."
+    },
+    {
+      "w": "une portion",
+      "g": "f",
+      "en": "portion",
+      "ex": "Les portions sont généreuses ici."
+    },
+    {
+      "w": "un régime",
+      "g": "m",
+      "en": "diet",
+      "ex": "Elle suit un régime sans sucre."
+    },
+    {
+      "w": "nutritif",
+      "g": "",
+      "en": "nutritious",
+      "ex": "Ce plat est très nutritif."
+    },
+    {
+      "w": "grignoter",
+      "g": "",
+      "en": "to snack",
+      "ex": "Il grignote entre les repas."
+    },
+    {
+      "w": "une épicerie",
+      "g": "f",
+      "en": "grocery store",
+      "ex": "Je passe à l'épicerie ce soir."
+    }
+  ],
+  "Argent et finances": [
+    {
+      "w": "un budget",
+      "g": "m",
+      "en": "budget",
+      "ex": "Ils respectent leur budget mensuel."
+    },
+    {
+      "w": "épargner",
+      "g": "",
+      "en": "to save money",
+      "ex": "Elle épargne chaque mois."
+    },
+    {
+      "w": "un compte bancaire",
+      "g": "m",
+      "en": "bank account",
+      "ex": "J'ai ouvert un compte bancaire."
+    },
+    {
+      "w": "un prêt",
+      "g": "m",
+      "en": "loan",
+      "ex": "Ils ont contracté un prêt étudiant."
+    },
+    {
+      "w": "investir",
+      "g": "",
+      "en": "to invest",
+      "ex": "Il investit dans l'immobilier."
+    },
+    {
+      "w": "une dette",
+      "g": "f",
+      "en": "debt",
+      "ex": "Elle a remboursé sa dette."
+    },
+    {
+      "w": "un revenu",
+      "g": "m",
+      "en": "income",
+      "ex": "Leur revenu a augmenté cette année."
+    },
+    {
+      "w": "une facture",
+      "g": "f",
+      "en": "bill/invoice",
+      "ex": "La facture d'électricité est élevée."
+    },
+    {
+      "w": "rembourser",
+      "g": "",
+      "en": "to pay back",
+      "ex": "Il rembourse son prêt chaque mois."
+    },
+    {
+      "w": "le taux d'intérêt",
+      "g": "m",
+      "en": "interest rate",
+      "ex": "Le taux d'intérêt a baissé."
+    }
+  ],
+  "Culture": [
+    {
+      "w": "une tradition",
+      "g": "f",
+      "en": "tradition",
+      "ex": "Cette tradition remonte à plusieurs siècles."
+    },
+    {
+      "w": "un patrimoine",
+      "g": "m",
+      "en": "heritage",
+      "ex": "Ce monument fait partie du patrimoine."
+    },
+    {
+      "w": "un festival",
+      "g": "m",
+      "en": "festival",
+      "ex": "Le festival attire des milliers de visiteurs."
+    },
+    {
+      "w": "une œuvre d'art",
+      "g": "f",
+      "en": "artwork",
+      "ex": "Cette œuvre d'art est exposée au musée."
+    },
+    {
+      "w": "un artiste",
+      "g": "m",
+      "en": "artist",
+      "ex": "L'artiste présente sa nouvelle exposition."
+    },
+    {
+      "w": "la diversité",
+      "g": "f",
+      "en": "diversity",
+      "ex": "La diversité culturelle enrichit la société."
+    },
+    {
+      "w": "une coutume",
+      "g": "f",
+      "en": "custom",
+      "ex": "Chaque région a ses coutumes."
+    },
+    {
+      "w": "célébrer",
+      "g": "",
+      "en": "to celebrate",
+      "ex": "Ils célèbrent la fête chaque année."
+    },
+    {
+      "w": "un musée",
+      "g": "m",
+      "en": "museum",
+      "ex": "Nous avons visité le musée samedi."
+    },
+    {
+      "w": "le folklore",
+      "g": "m",
+      "en": "folklore",
+      "ex": "Le folklore local est très riche."
+    }
+  ],
+  "Sport": [
+    {
+      "w": "une équipe",
+      "g": "f",
+      "en": "team",
+      "ex": "Son équipe a gagné le match."
+    },
+    {
+      "w": "s'entraîner",
+      "g": "",
+      "en": "to train",
+      "ex": "Il s'entraîne tous les matins."
+    },
+    {
+      "w": "un match",
+      "g": "m",
+      "en": "game/match",
+      "ex": "Le match commence à vingt heures."
+    },
+    {
+      "w": "un arbitre",
+      "g": "m",
+      "en": "referee",
+      "ex": "L'arbitre a sifflé une faute."
+    },
+    {
+      "w": "la performance",
+      "g": "f",
+      "en": "performance",
+      "ex": "Sa performance a impressionné le public."
+    },
+    {
+      "w": "un champion",
+      "g": "m",
+      "en": "champion",
+      "ex": "Elle est championne nationale."
+    },
+    {
+      "w": "un stade",
+      "g": "m",
+      "en": "stadium",
+      "ex": "Le stade était plein."
+    },
+    {
+      "w": "marquer un but",
+      "g": "",
+      "en": "to score a goal",
+      "ex": "Il a marqué un but décisif."
+    },
+    {
+      "w": "la compétition",
+      "g": "f",
+      "en": "competition",
+      "ex": "La compétition est très forte cette année."
+    },
+    {
+      "w": "un entraîneur",
+      "g": "m",
+      "en": "coach",
+      "ex": "L'entraîneur motive son équipe."
+    }
+  ],
+  "Médias": [
+    {
+      "w": "une chaîne",
+      "g": "f",
+      "en": "channel",
+      "ex": "Cette chaîne diffuse les nouvelles en continu."
+    },
+    {
+      "w": "un journaliste",
+      "g": "m",
+      "en": "journalist",
+      "ex": "Le journaliste a interviewé le ministre."
+    },
+    {
+      "w": "une actualité",
+      "g": "f",
+      "en": "news item",
+      "ex": "Cette actualité fait le tour du monde."
+    },
+    {
+      "w": "diffuser",
+      "g": "",
+      "en": "to broadcast",
+      "ex": "L'émission sera diffusée ce soir."
+    },
+    {
+      "w": "un article",
+      "g": "m",
+      "en": "article",
+      "ex": "J'ai lu un article intéressant."
+    },
+    {
+      "w": "la presse",
+      "g": "f",
+      "en": "the press",
+      "ex": "La presse critique cette décision."
+    },
+    {
+      "w": "un reportage",
+      "g": "m",
+      "en": "report/documentary",
+      "ex": "Le reportage montre la réalité du terrain."
+    },
+    {
+      "w": "censurer",
+      "g": "",
+      "en": "to censor",
+      "ex": "Certains pays censurent les médias."
+    },
+    {
+      "w": "un abonnement",
+      "g": "m",
+      "en": "subscription",
+      "ex": "Il a pris un abonnement au journal."
+    },
+    {
+      "w": "influencer",
+      "g": "",
+      "en": "to influence",
+      "ex": "Les médias influencent l'opinion publique."
+    }
+  ],
+  "Politique": [
+    {
+      "w": "un gouvernement",
+      "g": "m",
+      "en": "government",
+      "ex": "Le gouvernement a annoncé une réforme."
+    },
+    {
+      "w": "une élection",
+      "g": "f",
+      "en": "election",
+      "ex": "Les élections auront lieu en octobre."
+    },
+    {
+      "w": "voter",
+      "g": "",
+      "en": "to vote",
+      "ex": "Elle a voté dès l'ouverture du bureau."
+    },
+    {
+      "w": "un député",
+      "g": "m",
+      "en": "member of parliament",
+      "ex": "Le député a défendu son projet."
+    },
+    {
+      "w": "une loi",
+      "g": "f",
+      "en": "law",
+      "ex": "Cette loi entre en vigueur demain."
+    },
+    {
+      "w": "un parti politique",
+      "g": "m",
+      "en": "political party",
+      "ex": "Il a rejoint un nouveau parti politique."
+    },
+    {
+      "w": "une réforme",
+      "g": "f",
+      "en": "reform",
+      "ex": "La réforme suscite beaucoup de débats."
+    },
+    {
+      "w": "le pouvoir",
+      "g": "m",
+      "en": "power",
+      "ex": "Le pouvoir change de mains cette année."
+    },
+    {
+      "w": "manifester",
+      "g": "",
+      "en": "to protest",
+      "ex": "Des milliers de personnes ont manifesté."
+    },
+    {
+      "w": "un citoyen",
+      "g": "m",
+      "en": "citizen",
+      "ex": "Chaque citoyen a le droit de vote."
+    }
+  ],
+  "Consommation": [
+    {
+      "w": "un produit",
+      "g": "m",
+      "en": "product",
+      "ex": "Ce produit est fabriqué localement."
+    },
+    {
+      "w": "acheter",
+      "g": "",
+      "en": "to buy",
+      "ex": "Elle achète ses vêtements en ligne."
+    },
+    {
+      "w": "une publicité",
+      "g": "f",
+      "en": "advertisement",
+      "ex": "Cette publicité passe à la télévision."
+    },
+    {
+      "w": "le gaspillage",
+      "g": "m",
+      "en": "waste (of resources)",
+      "ex": "Le gaspillage alimentaire est un vrai problème."
+    },
+    {
+      "w": "un consommateur",
+      "g": "m",
+      "en": "consumer",
+      "ex": "Les consommateurs sont plus attentifs aujourd'hui."
+    },
+    {
+      "w": "une marque",
+      "g": "f",
+      "en": "brand",
+      "ex": "Cette marque est très populaire."
+    },
+    {
+      "w": "un rabais",
+      "g": "m",
+      "en": "discount",
+      "ex": "J'ai eu un rabais de vingt pour cent."
+    },
+    {
+      "w": "la surconsommation",
+      "g": "f",
+      "en": "overconsumption",
+      "ex": "La surconsommation nuit à l'environnement."
+    },
+    {
+      "w": "un emballage",
+      "g": "m",
+      "en": "packaging",
+      "ex": "Cet emballage est recyclable."
+    },
+    {
+      "w": "responsable",
+      "g": "",
+      "en": "responsible",
+      "ex": "Elle privilégie une consommation responsable."
+    }
+  ],
+  "Transport": [
+    {
+      "w": "un trajet",
+      "g": "m",
+      "en": "trip/commute",
+      "ex": "Le trajet dure quarante minutes."
+    },
+    {
+      "w": "les transports en commun",
+      "g": "m",
+      "en": "public transit",
+      "ex": "Il prend les transports en commun chaque jour."
+    },
+    {
+      "w": "un embouteillage",
+      "g": "m",
+      "en": "traffic jam",
+      "ex": "Il y avait un embouteillage sur l'autoroute."
+    },
+    {
+      "w": "conduire",
+      "g": "",
+      "en": "to drive",
+      "ex": "Elle conduit depuis dix ans."
+    },
+    {
+      "w": "un permis de conduire",
+      "g": "m",
+      "en": "driver's license",
+      "ex": "Il a obtenu son permis de conduire."
+    },
+    {
+      "w": "une piste cyclable",
+      "g": "f",
+      "en": "bike lane",
+      "ex": "La ville a créé une piste cyclable."
+    },
+    {
+      "w": "covoiturer",
+      "g": "",
+      "en": "to carpool",
+      "ex": "Ils covoiturent pour aller au travail."
+    },
+    {
+      "w": "un carburant",
+      "g": "m",
+      "en": "fuel",
+      "ex": "Le prix du carburant a augmenté."
+    },
+    {
+      "w": "un abonnement mensuel",
+      "g": "m",
+      "en": "monthly pass",
+      "ex": "Elle a un abonnement mensuel de bus."
+    },
+    {
+      "w": "la circulation",
+      "g": "f",
+      "en": "traffic",
+      "ex": "La circulation est dense le matin."
+    }
+  ],
+  "Loisirs": [
+    {
+      "w": "un passe-temps",
+      "g": "m",
+      "en": "hobby",
+      "ex": "La lecture est son passe-temps préféré."
+    },
+    {
+      "w": "se détendre",
+      "g": "",
+      "en": "to relax",
+      "ex": "Il se détend en écoutant de la musique."
+    },
+    {
+      "w": "une sortie",
+      "g": "f",
+      "en": "outing",
+      "ex": "On organise une sortie en famille."
+    },
+    {
+      "w": "un spectacle",
+      "g": "m",
+      "en": "show",
+      "ex": "Le spectacle commence à vingt heures."
+    },
+    {
+      "w": "un jeu vidéo",
+      "g": "m",
+      "en": "video game",
+      "ex": "Il joue à un jeu vidéo tous les soirs."
+    },
+    {
+      "w": "la lecture",
+      "g": "f",
+      "en": "reading",
+      "ex": "La lecture l'aide à se détendre."
+    },
+    {
+      "w": "bricoler",
+      "g": "",
+      "en": "to do DIY",
+      "ex": "Elle aime bricoler le week-end."
+    },
+    {
+      "w": "une randonnée",
+      "g": "f",
+      "en": "hike",
+      "ex": "Ils font une randonnée en montagne."
+    },
+    {
+      "w": "le temps libre",
+      "g": "m",
+      "en": "free time",
+      "ex": "Il n'a pas beaucoup de temps libre."
+    },
+    {
+      "w": "divertissant",
+      "g": "",
+      "en": "entertaining",
+      "ex": "Ce film est très divertissant."
+    }
+  ],
+  "Relations sociales": [
+    {
+      "w": "un ami",
+      "g": "m",
+      "en": "friend",
+      "ex": "Il a rencontré un ami d'enfance."
+    },
+    {
+      "w": "la confiance",
+      "g": "f",
+      "en": "trust",
+      "ex": "La confiance est essentielle dans un couple."
+    },
+    {
+      "w": "se disputer",
+      "g": "",
+      "en": "to argue",
+      "ex": "Ils se sont disputés hier soir."
+    },
+    {
+      "w": "un malentendu",
+      "g": "m",
+      "en": "misunderstanding",
+      "ex": "C'était un simple malentendu."
+    },
+    {
+      "w": "soutenir",
+      "g": "",
+      "en": "to support",
+      "ex": "Ses amis l'ont beaucoup soutenu."
+    },
+    {
+      "w": "une amitié",
+      "g": "f",
+      "en": "friendship",
+      "ex": "Leur amitié dure depuis vingt ans."
+    },
+    {
+      "w": "se réconcilier",
+      "g": "",
+      "en": "to reconcile",
+      "ex": "Ils se sont réconciliés rapidement."
+    },
+    {
+      "w": "respecter",
+      "g": "",
+      "en": "to respect",
+      "ex": "Il faut respecter les opinions des autres."
+    },
+    {
+      "w": "un réseau",
+      "g": "m",
+      "en": "network (people)",
+      "ex": "Elle a un grand réseau d'amis."
+    },
+    {
+      "w": "partager",
+      "g": "",
+      "en": "to share",
+      "ex": "Ils partagent souvent leurs idées."
+    }
+  ],
+  "Sécurité": [
+    {
+      "w": "la sécurité",
+      "g": "f",
+      "en": "safety/security",
+      "ex": "La sécurité du quartier s'est améliorée."
+    },
+    {
+      "w": "un vol",
+      "g": "m",
+      "en": "theft",
+      "ex": "Un vol a été signalé hier."
+    },
+    {
+      "w": "un cambriolage",
+      "g": "m",
+      "en": "burglary",
+      "ex": "Il y a eu un cambriolage la nuit dernière."
+    },
+    {
+      "w": "prévenir",
+      "g": "",
+      "en": "to prevent",
+      "ex": "Ces mesures permettent de prévenir les accidents."
+    },
+    {
+      "w": "la police",
+      "g": "f",
+      "en": "police",
+      "ex": "La police a arrêté le suspect."
+    },
+    {
+      "w": "un témoin",
+      "g": "m",
+      "en": "witness",
+      "ex": "Un témoin a décrit la scène."
+    },
+    {
+      "w": "signaler",
+      "g": "",
+      "en": "to report",
+      "ex": "Elle a signalé l'incident à la police."
+    },
+    {
+      "w": "un risque",
+      "g": "m",
+      "en": "risk",
+      "ex": "Ce quartier présente peu de risques."
+    },
+    {
+      "w": "une alarme",
+      "g": "f",
+      "en": "alarm",
+      "ex": "L'alarme s'est déclenchée cette nuit."
+    },
+    {
+      "w": "se méfier",
+      "g": "",
+      "en": "to be wary",
+      "ex": "Il faut se méfier des arnaques en ligne."
+    }
+  ],
+  "Climat": [
+    {
+      "w": "le climat",
+      "g": "m",
+      "en": "climate",
+      "ex": "Le climat devient plus imprévisible."
+    },
+    {
+      "w": "la sécheresse",
+      "g": "f",
+      "en": "drought",
+      "ex": "La sécheresse a détruit les récoltes."
+    },
+    {
+      "w": "une inondation",
+      "g": "f",
+      "en": "flood",
+      "ex": "L'inondation a touché plusieurs villages."
+    },
+    {
+      "w": "la température",
+      "g": "f",
+      "en": "temperature",
+      "ex": "La température a battu un record."
+    },
+    {
+      "w": "un ouragan",
+      "g": "m",
+      "en": "hurricane",
+      "ex": "Un ouragan approche de la côte."
+    },
+    {
+      "w": "s'adapter",
+      "g": "",
+      "en": "to adapt",
+      "ex": "Les agriculteurs doivent s'adapter au climat."
+    },
+    {
+      "w": "les émissions de CO2",
+      "g": "f",
+      "en": "CO2 emissions",
+      "ex": "Le pays réduit ses émissions de CO2."
+    },
+    {
+      "w": "fondre",
+      "g": "",
+      "en": "to melt",
+      "ex": "Les glaciers fondent rapidement."
+    },
+    {
+      "w": "une vague de chaleur",
+      "g": "f",
+      "en": "heatwave",
+      "ex": "Une vague de chaleur touche la région."
+    },
+    {
+      "w": "le dérèglement climatique",
+      "g": "m",
+      "en": "climate disruption",
+      "ex": "Le dérèglement climatique inquiète les experts."
+    }
+  ]
+}
