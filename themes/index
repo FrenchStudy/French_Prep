@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Thèmes — Plume</title>
+<link rel="stylesheet" href="../shared/styles.css">
+<style>
+.theme-card{ border:2.5px solid var(--ink); border-radius:18px; padding:16px 18px; background:var(--card); box-shadow:var(--shadow); text-decoration:none; color:var(--ink); display:block; }
+.theme-card h3{ font-family:'Baloo 2',sans-serif; font-size:17px; margin:0 0 8px; }
+.theme-bar{ height:8px; background:var(--yellow-soft); border-radius:999px; overflow:hidden; border:1.5px solid var(--ink); margin-bottom:6px; }
+.theme-bar > i{ display:block; height:100%; background:var(--green); }
+.theme-meta{ font-size:11.5px; font-weight:700; color:var(--ink-soft); }
+.theme-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:14px; margin-top:8px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="top" id="plumeHeader"></header>
+  <nav class="top-nav" id="plumeNav"></nav>
+  <main>
+    <h1 class="page-title">Thèmes</h1>
+    <p class="lede">21 thèmes officiels utilisés pour le vocabulaire, les questions de Plume à l'oral, et tes progrès. Clique un thème pour réviser son vocabulaire.</p>
+    <div id="loadArea"><p class="loading-line">Chargement des thèmes...</p></div>
+    <div class="theme-grid" id="themeGrid"></div>
+  </main>
+  <footer class="site-footer">Fait avec Plume · Tes données restent dans ce navigateur</footer>
+</div>
+
+<script src="../shared/app.js"></script>
+<script>
+renderPlumeHeader('themes', '../');
+
+async function init(){
+  try{
+    const TOPICS = await loadJSON('../data/themes.json');
+    document.getElementById('loadArea').innerHTML = '';
+    const vocabProgress = PlumeStorage.get('plume:vocab-progress', {});
+    const grid = document.getElementById('themeGrid');
+    grid.innerHTML = Object.entries(TOPICS).map(([topic, words])=>{
+      let known=0;
+      words.forEach(w=>{ const st = vocabProgress[topic+'::'+w.w]; if(st && st.status==='known') known++; });
+      const pct = Math.round((known/words.length)*100);
+      return `
+        <a class="theme-card" href="../vocabulary.html?theme=${encodeURIComponent(topic)}">
+          <h3>${escapeHtml(topic)}</h3>
+          <div class="theme-bar"><i style="width:${pct}%"></i></div>
+          <div class="theme-meta">${known}/${words.length} mots connus</div>
+        </a>`;
+    }).join('');
+  }catch(err){
+    document.getElementById('loadArea').innerHTML = `<div class="error-line">⚠️ ${escapeHtml(err.message)}</div>`;
+  }
+}
+init();
+</script>
+</body>
+</html>
